@@ -6,75 +6,85 @@ int y = 0;
 float xmult = 0;
 float ymult = 0;
 
-const int threshold = 10;
-const int m = 100;
+const int threshold = 10; // Lighting threshold
 const int dspeed = 40;
-const int xcal = -44;
-const int ycal = -38;
+const int xcal = -44; // Need to calibrate xcal and ycal under the normal lighting condition
+const int ycal = -38; 
+const float forwardbuffer = .2;
 
 #include <Wire.h>
 #include <Adafruit_MotorShield.h>
 #include "utility/Adafruit_MS_PWMServoDriver.h"
-//includes the motorshielf required libraies
+
+//includes the motorshielf required libraries
 Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
-//Creates the motrshield object
-
-
+//Creates the motorshield object
 Adafruit_DCMotor *leftMotor = AFMS.getMotor(1);
 Adafruit_DCMotor *rightMotor = AFMS.getMotor(2);
-//Creates motor objects, parameter is the port it is connected to (M1 = 1, M2 = 2, M3 = 3, M4 = 4)
 
 
 void setup() {
-  // put your setup code here, to run once:
-   AFMS.begin();
-  leftMotor->setSpeed(50);
-  rightMotor->setSpeed(50);
+  AFMS.begin();
+  leftMotor->setSpeed(dspeed);
+  rightMotor->setSpeed(dspeed);
   Serial.begin(9600);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   y = analogRead(front) - (analogRead(left) + analogRead(right))/2 + ycal;
   x = analogRead(left) - analogRead(right) + xcal;
-  //positive y = forward, positive x = left
-  if(abs(x) > threshold or abs(y) > threshold){
-    xmult = float(abs(x))/100.0;
-    ymult = float(abs(y))/ 50.0;
-    if(xmult > 1){
+  // positive y = forward, positive x = left
+  if (abs(x) > threshold or abs(y) > threshold) {
+    // Scale down x and y
+    xmult = abs(x)/100.0;
+    ymult = abs(y)/50.0;
+
+    // xmult is from 0 to 1
+    if (xmult > 1){
       xmult = 1;
     }
-    float forwardbuffer = .2;
 
-    if(ymult > 1 - forwardbuffer){
-      ymult = 1 - forwardbuffer;
-    }
-    int turnspeed = dspeed * (ymult + forwardbuffer) * (1-xmult);
-    int forwardspeed = dspeed * (ymult + forwardbuffer);
-    if (turnspeed > 50)
-      turnspeed = 50;
-    if (forwardspeed > 50)
-      forwardspeed = 50;
-    if (x > 0){
-      rightMotor->setSpeed(forwardspeed);
-      leftMotor->setSpeed(turnspeed);
-    } else {
-      rightMotor->setSpeed(turnspeed);
-      leftMotor->setSpeed(forwardspeed);    
+    // ymult is from 0.2 to 1
+    ymult += forwardbuffer;
+    if (ymult > 1){
+      ymult = 1;
     }
 
-    if(y > 0){
-      leftMotor->run(FORWARD);
-      rightMotor->run(FORWARD);
-    } else {
-      leftMotor->run(BACKWARD);
-      rightMotor->run(BACKWARD);
-    }
+    // speeds are from 0 to dspeed
+    int turnspeed = dspeed * ymult * (1 - xmult); // turnspeed <= forwardspeed
+    int forwardspeed = dspeed * ymult;
+    
+    runCommand(forwardspeed, turnspeed);
   } else {
-    leftMotor->run(RELEASE);
-    rightMotor->run(RELEASE);
+    stopCommand();
   }
-  Serial.print(String(x));
-  Serial.print(" , ");
-  Serial.println(String(y));
+  printValues();
+}
+
+// Helper function to set the wheels' speeds
+void runCommand(int forwardspeed, int turnspeed) {
+  if (x > 0){
+    // Turn left
+    rightMotor->setSpeed(forwardspeed);
+    leftMotor->setSpeed(turnspeed);
+  } else {
+    // Turn right
+    rightMotor->setSpeed(turnspeed);
+    leftMotor->setSpeed(forwardspeed);    
+  }
+  leftMotor->run(y > 0 ? FORWARD : BACKWARD); // Conditional tenary operator
+  rightMotor->run(y > 0 ? FORWARD : BACKWARD);
+}
+
+// Helper function to stop both wheels
+void stopCommand() {
+  leftMotor->run(RELEASE);
+  rightMotor->run(RELEASE);
+}
+
+// Helper function to print whatever values we want
+void printValues() {
+  Serial.print(xmult);
+  Serial.print("\t");
+  Serial.println(ymult);
 }
