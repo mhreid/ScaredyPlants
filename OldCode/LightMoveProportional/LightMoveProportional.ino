@@ -1,16 +1,16 @@
-const int front = A2;
+const int front = A0;
 const int left = A1;
-const int right = A0;
+const int right = A2;
 int x = 0;
 int y = 0;
 float xmult = 0;
 float ymult = 0;
 
-const int threshold = 10;
+const int threshold = 5;
 const int m = 100;
-const int dspeed = 40;
-const int xcal = -44;
-const int ycal = -38;
+const int dspeed = 50;
+const int xcal = 10;
+const int ycal = -10;
 
 #include <Wire.h>
 #include <Adafruit_MotorShield.h>
@@ -35,28 +35,19 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  y = analogRead(front) - (analogRead(left) + analogRead(right))/2 + ycal;
-  x = analogRead(left) - analogRead(right) + xcal;
+  y = analogRead(front) - analogRead(left) + analogRead(right)/2 + ycal -383;
+  x = analogRead(left) - analogRead(right) + xcal +20;
   //positive y = forward, positive x = left
   if(abs(x) > threshold or abs(y) > threshold){
     xmult = float(abs(x))/100.0;
-    ymult = float(abs(y))/ 50.0;
-    if(xmult > 1){
-      xmult = 1;
-    }
-    float forwardbuffer = .2;
+    ymult = float(abs(y))/ 100.0;
 
-    if(ymult > 1 - forwardbuffer){
-      ymult = 1 - forwardbuffer;
-    }
-    int turnspeed = dspeed * (ymult + forwardbuffer) * (1-xmult);
-    int forwardspeed = dspeed * (ymult + forwardbuffer);
-    if(x > 0){
-      rightMotor->setSpeed(forwardspeed);
-      leftMotor->setSpeed(turnspeed);
+    if(x < 0){
+      rightMotor->setSpeed(dspeed * ymult);
+      leftMotor->setSpeed(dspeed * ymult * (1-xmult));
     } else {
-      rightMotor->setSpeed(turnspeed);
-      leftMotor->setSpeed(forwardspeed);    
+      rightMotor->setSpeed(dspeed * ymult * (1 - xmult));
+      leftMotor->setSpeed(dspeed * ymult);    
     }
 
     if(y > 0){
@@ -70,7 +61,7 @@ void loop() {
     leftMotor->run(RELEASE);
     rightMotor->run(RELEASE);
   }
-  Serial.print(String(x));
+  Serial.print(xmult);
   Serial.print(" , ");
-  Serial.println(String(y));
+  Serial.println(ymult);
 }

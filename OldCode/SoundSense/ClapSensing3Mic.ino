@@ -9,10 +9,12 @@ Adafruit Microphone Amplifier
 // If we ever use an IMU, it will connect to A4 and A5
 
 
-const int sampleWindow = 1000; // Sample window width in mS (50 mS = 20Hz)
+const int sampleWindow = 100; // Sample window width in mS (50 mS = 20Hz)
 unsigned int sample;
 unsigned int sample2;
 unsigned int sample3;
+unsigned int angle_deg = 0;
+int threshold = 60;
 
 void setup() 
 {
@@ -51,6 +53,7 @@ void loop()
    // collect data for 50 mS
    while (millis() - startMillis < sampleWindow)
    {
+      
       sample = analogRead(A0);
       sample2 = analogRead(A1);
       sample3 = analogRead(A2);
@@ -104,4 +107,46 @@ void loop()
    Serial.println("Mic 1: "); Serial.print(volts*1000); Serial.print("  ");
    Serial.print("Mic 2: "); Serial.print(volts2*1500); Serial.print("  ");
    Serial.print("Mic 3: "); Serial.print(volts3*1000); Serial.print("  ");
+
+// Maybe later, change to if(volts*1000+volts2*1500+volts3*1000 > threshold*3)
+   if(volts*1000 > threshold || volts2*1500>threshold || volts3*1000>threshold){
+    if(volts*1000> volts2*1500){
+      if(volts3*1000>volts2*1500){
+        if(volts3*1000>volts*1000){
+          // Value order is 312
+          angle_deg = 340;
+        }
+        else{
+          // Value order is 132
+          angle_deg = 200;
+        }
+      }
+      else{
+        // Value order is 123
+        angle_deg = 100;
+      }
+    }
+    else{
+      if(volts3*1000>volts2*1500){
+        
+      }
+      else{
+        if(volts3*1000>volts2*1500){
+          // Value order is 321
+          angle_deg = 260;
+        }
+        else{
+          if(volts3*1000>volts*1000){
+            // Value order is 231
+            angle_deg = 220;
+          }
+          else{
+            // Value order is 213
+            angle_deg = 140;
+          }
+        }
+      }
+    }
+   }
+   Serial.print("Angle Heading: "); Serial.print(angle_deg); Serial.print("  ");
 }
