@@ -2,23 +2,41 @@
 Example Sound Level Sketch for the 
 Adafruit Microphone Amplifier
 ****************************************/
-// Mic 1 connects to A0
-// Mic 2 connects to A1
-// Mic 3 connects to A2
+// Mic 1 @ 120 degrees connects to A1
+// Mic 2 @ 0 degrees connects to A2
+// Mic 3 @ 240 degrees connects to A0
 // If we ever get a Mic 4, it will connect to A3
 // If we ever use an IMU, it will connect to A4 and A5
 
+#include <Wire.h>
+#include <Adafruit_MotorShield.h>
+#include "utility/Adafruit_MS_PWMServoDriver.h"
 
+//includes the motorshield required libraries
+Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
+//Creates the motorshield object
+Adafruit_DCMotor *leftMotor = AFMS.getMotor(1);
+Adafruit_DCMotor *rightMotor = AFMS.getMotor(2);
+
+// Sets up Variables that will be used
 const int sampleWindow = 100; // Sample window width in mS (50 mS = 20Hz)
 unsigned int sample;
 unsigned int sample2;
 unsigned int sample3;
 unsigned int angle_deg = 0;
-int threshold = 100;
+int threshold = 200;
 unsigned long moveMillis = millis(); // Starts counting time for how long an angle has been given
 
 void setup() 
 {
+
+  // Sets up motor shield stuff
+  AFMS.begin();
+  leftMotor->setSpeed(0);
+  rightMotor->setSpeed(0);
+  Serial.begin(9600);
+  
+  //Sets up pins that will be used.
   pinMode(8, OUTPUT);
   pinMode(9, OUTPUT);
   pinMode(10, OUTPUT);
@@ -32,9 +50,8 @@ void setup()
   digitalWrite(11, HIGH);
   digitalWrite(12, HIGH);
   digitalWrite(13, HIGH);
-  
-   Serial.begin(9600);
-   
+  angle_deg = 0;
+
    
 }
 
@@ -53,18 +70,14 @@ void loop()
    unsigned int signalMax3 = 0; // Mic 3
    unsigned int signalMin3 = 1024;
 
-  
-  if(millis() - moveMillis > 10000){
-    angle_deg = 0;
-  }
 
    // collect data for 50 mS
    while (millis() - startMillis < sampleWindow)
    {
       
-      sample = analogRead(A0);
-      sample2 = analogRead(A1);
-      sample3 = analogRead(A2);
+      sample = analogRead(A1);
+      sample2 = analogRead(A2);
+      sample3 = analogRead(A0);
       // Mic 1
       if (sample < 1024)  // toss out spurious readings
       {
@@ -111,14 +124,13 @@ void loop()
    peakToPeak3 = signalMax3 - signalMin3;  // max - min = peak-peak amplitude
    double volts3 = (peakToPeak3 * 5.0) / 1024;  // convert to volts
 
-   //Serial.println(volts*100);
+//   Serial.println(volts*100);
    Serial.println("Mic 1: "); Serial.print(volts*1000); Serial.print("  ");
    Serial.print("Mic 2: "); Serial.print(volts2*1500); Serial.print("  ");
    Serial.print("Mic 3: "); Serial.print(volts3*1000); Serial.print("  ");
 
 // Maybe later, change to if(volts*1000+volts2*1500+volts3*1000 > threshold*3)
    if(volts*1000 > threshold || volts2*1500>threshold || volts3*1000>threshold){
-    unsigned long moveMillis = millis(); // Starts counting time for how long an angle has been given
     if(volts*1000> volts2*1500){
       if(volts3*1000>volts2*1500){
         if(volts3*1000>volts*1000){
@@ -156,6 +168,19 @@ void loop()
         }
       }
     }
+   };
+   
+   if(angle_deg > 0){
+    //Serial.print("Angle Heading: "); Serial.print(angle_deg); Serial.print("  ");
+    rightMotor->setSpeed(50);
+    leftMotor->setSpeed(50);
+    leftMotor->run(BACKWARD);
+    rightMotor->run(FORWARD);
+    delay(angle_deg*3.333);
+    leftMotor->run(RELEASE);
+    rightMotor->run(RELEASE);
+    angle_deg = 0;
    }
-   Serial.print("Angle Heading: "); Serial.print(angle_deg); Serial.print("  ");
+//   Serial.print("Angle Heading: "); Serial.print(angle_deg); Serial.print("  ");
+   
 }
