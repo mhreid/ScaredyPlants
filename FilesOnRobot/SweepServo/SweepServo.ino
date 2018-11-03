@@ -1,12 +1,3 @@
-/* Sweep
- by BARRAGAN <http://barraganstudio.com>
- This example code is in the public domain.
-
- modified 8 Nov 2013
- by Scott Fitzgerald
- http://www.arduino.cc/en/Tutorial/Sweep
-*/
-
 #include <Servo.h>
 
 Servo myservo;  
@@ -17,18 +8,17 @@ int current_pos = 0;    // variable to store the servo current's position
 void setup() {
   myservo.attach(SERVO_PIN);
   servo_write(0, 50);
+}
+
+void loop() {
   rotate(180, 15);
   rotate(-180, 15);
 }
 
-void loop() {
-
-}
-
 void servo_write(int value, int time_delay) {
   myservo.write(value);
-  delay(time_delay);
   current_pos = value;
+  delay(time_delay);
 }
 
 void rotate(int degree, int time_delay) {
