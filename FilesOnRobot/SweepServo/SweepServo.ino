@@ -11,8 +11,8 @@ void setup() {
 }
 
 void loop() {
-  rotate(180, 15);
-  rotate(-180, 15);
+  servo_rotate(180, 15);
+  servo_rotate(-180, 15);
 }
 
 void servo_write(int value, int time_delay) {
@@ -21,7 +21,7 @@ void servo_write(int value, int time_delay) {
   delay(time_delay);
 }
 
-void rotate(int degree, int time_delay) {
+void servo_rotate(int degree, int time_delay) {
   int desired_pos = current_pos + degree;
   if (desired_pos < 0) {
     desired_pos = 0;
