@@ -1,10 +1,12 @@
 /****************************************
   This code prioritized Sound.
-  If the robot gets a sound input, a flag will be set to "TRUE" and it will skip the light sensing for a little while.
+  If the robot gets a sound input, a flag will 
+  be set to "TRUE" and it will skip the light 
+  sensing for a little while.
 ****************************************/
-// Mic 1 @ 120 degrees connects to A1
-// Mic 2 @ 0 degrees connects to A2
-// Mic 3 @ 240 degrees connects to A0
+// Mic 1 @ 120 degrees connects to A9 (FRONT)
+// Mic 2 @ 0 degrees connects to A11 (RIGHT)
+// Mic 3 @ 240 degrees connects to A13 (LEFT)
 
 // MOTOR STUFF
 #include <Wire.h>
@@ -30,44 +32,28 @@ unsigned long moveMillis = millis(); // Starts counting time for how long an ang
 
 
 //LIGHT STUFF
-const int front = A3;
-const int left = A4;
-const int right = A5;
+const int front = A4;
+const int right = A15;
+const int left = A2;
 int x = 0;
 int y = 0;
 float xmult = 0;
 float ymult = 0;
 
-const int threshold = 10; // Lighting threshold
-const int dspeed = 40;// default speed
-const int xcal = -44; // Need to calibrate xcal and ycal under the normal lighting condition
-const int ycal = -38;
+const int threshold_light = 10;
+const int dspeed = 110;// default speed
+const int frontCal = -85; // Need to calibrate xcal and ycal under the normal lighting condition
+const int leftCal = -42;
+const int rightCal = 0;
 const float forwardbuffer = .2;
 
 void setup()
 {
-
   // MOTOR SHIELD SETUP
   AFMS.begin();
   leftMotor->setSpeed(dspeed);
   rightMotor->setSpeed(dspeed);
   Serial.begin(9600);
-
-  // SOUND PINS SETUP
-  //Sets up pins that will be used.
-  pinMode(8, OUTPUT);
-  pinMode(9, OUTPUT);
-  pinMode(10, OUTPUT);
-  digitalWrite(8, LOW);
-  digitalWrite(9, LOW);
-  digitalWrite(10, LOW);
-
-  pinMode(11, OUTPUT);
-  pinMode(12, OUTPUT);
-  pinMode(13, OUTPUT);
-  digitalWrite(11, HIGH);
-  digitalWrite(12, HIGH);
-  digitalWrite(13, HIGH);
   angle_deg = 0;
 }
 
@@ -75,7 +61,7 @@ void setup()
 void loop()
 {
   senseSound(false);
-  senseLight(false);
+  senseLight(true);
 }
 
 
@@ -106,9 +92,9 @@ void senseSound(bool shouldPrint) {
   // collect data for 50 mS
   if (millis() - startMillis < sampleWindow)
   {
-    sample = analogRead(A1);
-    sample2 = analogRead(A2);
-    sample3 = analogRead(A0);
+    sample = analogRead(A13);
+    sample2 = analogRead(A9);
+    sample3 = analogRead(A11);
     // Mic 1
     if (sample < 1024)  // toss out spurious readings
     {
@@ -155,7 +141,7 @@ void senseSound(bool shouldPrint) {
     peakToPeak3 = signalMax3 - signalMin3;  // max - min = peak-peak amplitude
     double volts3 = 1000 * (peakToPeak3 * 5.0) / 1024;  // convert to volts
 
-    // Maybe later, change to if(volts+volts2+volts3 > threshold*3)
+    // Maybe later, change to if(volts+volts2+volts3 > threshold_sound*3)
     if (volts > threshold_sound || volts2 > threshold_sound || volts3 > threshold_sound) {
       if (volts > volts2) {
         if (volts3 > volts2) {
@@ -190,7 +176,7 @@ void senseSound(bool shouldPrint) {
       }
     };
 
-    if (shouldPrint && false) {
+    if (shouldPrint) {
       Serial.print("Mic 1: "); Serial.print(volts); Serial.print("\t");
       Serial.print("Mic 2: "); Serial.print(volts2); Serial.print("\t");
       Serial.print("Mic 3: "); Serial.print(volts3); Serial.println("\t");
@@ -198,10 +184,12 @@ void senseSound(bool shouldPrint) {
     }
 
     if (angle_deg > 0) {
-      rightMotor->setSpeed(50);
-      leftMotor->setSpeed(50);
+      rightMotor->setSpeed(dspeed);
+      leftMotor->setSpeed(dspeed);
       rotateCommand(angle_deg - 180); // delay() goes in here
       stopCommand();
+      rightMotor->setSpeed(dspeed);
+      leftMotor->setSpeed(dspeed);
       leftMotor->run(FORWARD);
       rightMotor->run(FORWARD);
       delay(1000);
@@ -215,10 +203,13 @@ void senseSound(bool shouldPrint) {
 
 //LIGHT SENSING
 void senseLight(bool shouldPrint) {
-  y = analogRead(front) - (analogRead(left) + analogRead(right)) / 2 + ycal;
-  x = analogRead(left) - analogRead(right) + xcal;
+  float frontVal = analogRead(front) + frontCal;
+  float leftVal = analogRead(left) + leftCal;
+  float rightVal = analogRead(right) + rightCal; 
+  y = frontVal - (leftVal + rightVal)/2;
+  x = leftVal - rightVal;
   // positive y = forward, positive x = left
-  if (abs(x) > threshold or abs(y) > threshold) {
+  if (abs(x) > threshold_light or abs(y) > threshold_light) {
     // Scale down x and y
     xmult = abs(x) / 100.0;
     ymult = abs(y) / 50.0;
@@ -243,11 +234,11 @@ void senseLight(bool shouldPrint) {
     stopCommand();
   }
   if (shouldPrint) {
-    Serial.print(analogRead(front));
+    Serial.print(frontVal);
     Serial.print("\t");
-    Serial.print(analogRead(right));
+    Serial.print(leftVal);
     Serial.print("\t");
-    Serial.println(analogRead(left));
+    Serial.println(rightVal);
   }
 }
 
