@@ -67,6 +67,7 @@ void loop()
 }
 
 
+// TODO: Need to switch from Adafruit motor to a servo
 // LEAF SHRINKING
 void pullLeaves(float delayTime) {
   leafMotor->run(FORWARD);
@@ -197,6 +198,7 @@ void senseSound(bool shouldPrint) {
       Serial.print("Sound detected: "); Serial.println(angle_deg);
     }
 
+    // TODO: Need to fix this function to "simulate" two behaviors in parallel
     if (angle_deg > 0) {
       rightMotor->setSpeed(dspeed);
       leftMotor->setSpeed(dspeed);
