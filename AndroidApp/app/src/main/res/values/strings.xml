@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Scaredy Plants</string>
+    <string name="title_activity_device_list">Device List</string>
+    <string name="refresh">Refresh</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="mode_1">Mode 1</string>
+    <string name="mode_2">Mode 2</string>
+    <string name="mode_3">Mode 3</string>
+    <string name="mode_4">Mode 4</string>
+    <string name="helper_text">Connect to a Bluetooth device.</string>
+</resources>
