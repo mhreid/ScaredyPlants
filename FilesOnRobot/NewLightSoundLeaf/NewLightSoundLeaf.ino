@@ -1,7 +1,7 @@
 /****************************************
   This code prioritizes Sound.
-  If the robot gets a sound input, a flag will 
-  be set to "TRUE" and it will skip the light 
+  If the robot gets a sound input, a flag will
+  be set to "TRUE" and it will skip the light
   sensing for a little while.
 ****************************************/
 // Mic 1 @ 120 degrees connects to A9 (FRONT)
@@ -50,6 +50,7 @@ const float forwardbuffer = .2;
 
 //LEAF SERVO STUFF
 #include <Servo.h>
+<<<<<<< HEAD
 int uppos = 0; 
 int downpos = 140;
 int pos = uppos;  // 0 is open leaves, 140 is closed leaves
@@ -61,6 +62,24 @@ int leavespos1 = pos;
 int leavespos2 = pos;
 int leavespos3 = pos;
 
+=======
+int uppos = 0;
+int downpos = 130;
+int pos = uppos;  // 0 is open leaves, 140 is closed leaves
+bool goingup = false;
+Servo leaf1;  // create servo object to control a servo
+Servo leaf2;
+Servo leaf3;
+Servo leaf4;
+Servo leaf5;
+Servo leaf6;
+int leafpos1 = pos;
+int leafpos2 = pos;
+int leafpos3 = pos;
+int leafpos4 = pos;
+int leafpos5 = pos;
+int leafpos6 = pos;
+>>>>>>> 4e78bcf4bef3d2c097e9a124444027158ff035bf
 
 void setup()
 {
@@ -73,11 +92,21 @@ void setup()
   angle_deg = 0;
 
   //SERVO ATTACH
+<<<<<<< HEAD
   leaves1.attach(10);
   leaves2.attach(11);
   leaves3.attach(12);
 
     
+=======
+  leaf1.attach(10);
+  leaf2.attach(11);
+  leaf3.attach(12);
+  leaf4.attach(13);
+  leaf5.attach(14);
+  leaf6.attach(15);
+
+>>>>>>> 4e78bcf4bef3d2c097e9a124444027158ff035bf
 }
 
 
@@ -215,11 +244,9 @@ void rotateandrun(int motor_speed, int angle) {
   rightMotor->run(FORWARD);
   int timecheck2 = millis();
   int counter2 = 1;
-  while(millis()-timecheck2 < 3000){
-    leftMotor->run(FORWARD);
-    rightMotor->run(FORWARD);
-    if(millis()>(3000/140)*counter2){
-      pos += -1;
+  while (millis() - timecheck2 < 3000) {
+    if (millis() > (3000 / 140)*counter2) {
+      pos -= 1;
       leaf1.write(pos); //0 means it is all the way up
       counter2 += 1;
     }
@@ -232,6 +259,7 @@ void rotateandrun(int motor_speed, int angle) {
 
 // LEAF SHRINKING
 // TODO: Get rid of it and integrate the leaf movements into other actions.
+<<<<<<< HEAD
 void pullLeaves(bool up) {
    if(pos <= downpos && up == false){
     pos +=1;
@@ -247,6 +275,24 @@ void pullLeaves(bool up) {
     leaves3.write(pos); // tell servo to go to position in variable 'pos'
     delay(3);
 
+=======
+void pullLeaves(bool goingup) {
+  if (pos <= downpos && goingup == false) {
+    pos += 1;
+    leaf1.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(3);
+    if (pos == downpos) {
+      goingup = true;
+    }
+  }
+  if (pos >= uppos && goingup == true ) {
+    pos += -1;
+    leaf1.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(20);
+    if (pos == uppos) {
+      goingup = false;
+    }
+>>>>>>> 4e78bcf4bef3d2c097e9a124444027158ff035bf
   }
 }
 
@@ -254,9 +300,14 @@ void pullLeaves(bool up) {
 void senseLight(bool shouldPrint) {
   float frontVal = analogRead(front) + frontCal;
   float leftVal = analogRead(left) + leftCal;
+<<<<<<< HEAD
   float rightVal = analogRead(right) + rightCal; 
   #Serial.println("f" + String(frontVal) + "l" + String(leftVal) + "r" + String(rightVal));
   y = frontVal - (leftVal + rightVal)/2;
+=======
+  float rightVal = analogRead(right) + rightCal;
+  y = frontVal - (leftVal + rightVal) / 2;
+>>>>>>> 4e78bcf4bef3d2c097e9a124444027158ff035bf
   x = leftVal - rightVal;
   // positive y = forward, positive x = left
   if (abs(x) > threshold_light or abs(y) > threshold_light) {
@@ -330,11 +381,11 @@ void rotateCommand(int degree) {
   Serial.println(degree);
   int timecheck = millis();
   int counter1 = 1;
-  while(millis()-timecheck < abs(degree)*700.0/180){
-    leftMotor->run(degree > 0 ? FORWARD : BACKWARD);
-    rightMotor->run(degree > 0 ? BACKWARD : FORWARD);
-    if(millis()>abs(degree)*counter1*700.0/(180*140)){
-      pos +=1;
+  leftMotor->run(degree > 0 ? FORWARD : BACKWARD);
+  rightMotor->run(degree > 0 ? BACKWARD : FORWARD);
+  while (millis() - timecheck < abs(degree) * 700.0 / 180) {
+    if (millis() > abs(degree)*counter1 * 700.0 / (180 * 140)) {
+      pos += 1;
       leaf1.write(pos); //0 means it is all the way up
       counter1 += 1;
     }
