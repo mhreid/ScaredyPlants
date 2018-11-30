@@ -8,7 +8,7 @@
 // Mic 2 @ 0 degrees connects to A13 (RIGHT)
 // Mic 3 @ 240 degrees connects to A11 (LEFT)
 
-// MOTOR STUFF
+// MOTOR STUFFf
 #include <Wire.h>
 #include <Adafruit_MotorShield.h>
 #include "utility/Adafruit_MS_PWMServoDriver.h"
@@ -33,39 +33,34 @@ unsigned long moveMillis = millis(); // Starts counting time for how long an ang
 
 
 //LIGHT STUFF
-const int front = A4;
+const int front = A13;
 const int right = A15;
-const int left = A2;
+const int left = A11;
 int x = 0;
 int y = 0;
 float xmult = 0;
 float ymult = 0;
 
 const int threshold_light = 10;
-const int dspeed = 110;// default speed for wheels
-const int frontCal = 0; // Need to calibrate xcal and ycal under the normal lighting condition
-const int leftCal = 80;
-const int rightCal = 30;
+const int dspeed = 150;// default speed for wheels
+const int frontCal = -42; // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 300 in normal light
+const int leftCal = 4;
+const int rightCal = 29;
 const float forwardbuffer = .2;
 
 //LEAF SERVO STUFF
 #include <Servo.h>
 int uppos = 0; 
-int downpos = 130;
+int downpos = 140;
 int pos = uppos;  // 0 is open leaves, 140 is closed leaves
 bool goingup = false;
-Servo leaf1;  // create servo object to control a servo
-Servo leaf2;
-Servo leaf3;
-Servo leaf4;
-Servo leaf5;
-Servo leaf6;
-int leafpos1 = pos; 
-int leafpos2 = pos;
-int leafpos3 = pos;
-int leafpos4 = pos;
-int leafpos5 = pos;
-int leafpos6 = pos;
+Servo leaves1;  // create servo object to control a servo
+Servo leaves2;
+Servo leaves3;
+int leavespos1 = pos; 
+int leavespos2 = pos;
+int leavespos3 = pos;
+
 
 void setup()
 {
@@ -78,19 +73,17 @@ void setup()
   angle_deg = 0;
 
   //SERVO ATTACH
-  leaf1.attach(10);
-  leaf2.attach(11);
-  leaf3.attach(12);
-  leaf4.attach(13);
-  leaf5.attach(14);
-  leaf6.attach(15);
+  leaves1.attach(10);
+  leaves2.attach(11);
+  leaves3.attach(12);
+
     
 }
 
 
 void loop()
 {
-  senseSound(false);
+//  senseSound(false);
   senseLight(false);
 }
 
@@ -239,22 +232,21 @@ void rotateandrun(int motor_speed, int angle) {
 
 // LEAF SHRINKING
 // TODO: Get rid of it and integrate the leaf movements into other actions.
-void pullLeaves(bool goingup) {
-   if(pos <= downpos && goingup == false){
+void pullLeaves(bool up) {
+   if(pos <= downpos && up == false){
     pos +=1;
-    leaf1.write(pos);              // tell servo to go to position in variable 'pos'
+    leaves1.write(pos);
+    leaves2.write(pos);
+    leaves3.write(pos);   // tell servo to go to position in variable 'pos'
     delay(3);
-    if(pos == downpos){
-      goingup = true;
-    }
   }
-  if(pos >= uppos && goingup == true ){
-    pos += -1;
-    leaf1.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(20);
-    if(pos == uppos){
-      goingup = false;
-    }
+  if(pos >= uppos && up == true ){
+    pos -= 1;
+    leaves1.write(pos);
+    leaves2.write(pos);
+    leaves3.write(pos); // tell servo to go to position in variable 'pos'
+    delay(3);
+
   }
 }
 
@@ -263,6 +255,7 @@ void senseLight(bool shouldPrint) {
   float frontVal = analogRead(front) + frontCal;
   float leftVal = analogRead(left) + leftCal;
   float rightVal = analogRead(right) + rightCal; 
+  #Serial.println("f" + String(frontVal) + "l" + String(leftVal) + "r" + String(rightVal));
   y = frontVal - (leftVal + rightVal)/2;
   x = leftVal - rightVal;
   // positive y = forward, positive x = left
@@ -281,6 +274,15 @@ void senseLight(bool shouldPrint) {
     if (ymult > 1) {
       ymult = 1;
     }
+    //This makes speed exponential based on proximity
+    ymult *= ymult;
+    Serial.println(ymult);
+    if(ymult > .5){
+      pullLeaves(true);
+    }
+     else{
+      pullLeaves(false);
+     }
 
     // speeds are from 0 to dspeed
     int turnspeed = dspeed * ymult * (1 - xmult); // turnspeed <= forwardspeed
@@ -311,8 +313,15 @@ void runCommand(int forwardspeed, int turnspeed) {
     rightMotor->setSpeed(turnspeed);
     leftMotor->setSpeed(forwardspeed);
   }
-  leftMotor->run(y > 0 ? FORWARD : BACKWARD); // Conditional tenary operator
-  rightMotor->run(y > 0 ? FORWARD : BACKWARD);
+  //leftMotor->run(y > 0 ? FORWARD : BACKWARD); // Conditional tenary operator
+  //rightMotor->run(y > 0 ? FORWARD : BACKWARD);
+  if(y < 0){
+    rightMotor->run(FORWARD);
+    leftMotor->run(FORWARD);
+  }else{
+    rightMotor->run(BACKWARD);
+    leftMotor->run(BACKWARD);
+  }
 }
 
 

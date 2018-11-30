@@ -1,15 +1,15 @@
-const int front = A2;
-const int left = A1;
-const int right = A0;
+const int front = A13;
+const int left = A11;
+const int right = A15;
 int x = 0;
 int y = 0;
 float xmult = 0;
 float ymult = 0;
 
 const int threshold = 10; // Lighting threshold
-const int dspeed = 40;
-const int xcal = -44; // Need to calibrate xcal and ycal under the normal lighting condition
-const int ycal = -38; 
+const int dspeed = 80;
+const int xcal = 12; // Need to calibrate xcal and ycal under the normal lighting condition
+const int ycal = 0; 
 const float forwardbuffer = .2;
 
 #include <Wire.h>
@@ -33,7 +33,7 @@ void setup() {
 void loop() {
   y = analogRead(front) - (analogRead(left) + analogRead(right))/2 + ycal;
   x = analogRead(left) - analogRead(right) + xcal;
-  // positive y = forward, positive x = left
+  // positive y = front detected (move backward), positive x = left detected (move right)
   if (abs(x) > threshold or abs(y) > threshold) {
     // Scale down x and y
     xmult = abs(x)/100.0;
@@ -53,7 +53,8 @@ void loop() {
     // speeds are from 0 to dspeed
     int turnspeed = dspeed * ymult * (1 - xmult); // turnspeed <= forwardspeed
     int forwardspeed = dspeed * ymult;
-    
+    x = 10
+   
     runCommand(forwardspeed, turnspeed);
   } else {
     stopCommand();
@@ -84,7 +85,7 @@ void stopCommand() {
 
 // Helper function to print whatever values we want
 void printValues() {
-  Serial.print(xmult);
+  Serial.print(x);
   Serial.print("\t");
-  Serial.println(ymult);
+  Serial.println(y);
 }
