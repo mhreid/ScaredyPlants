@@ -18,7 +18,6 @@ Adafruit_MotorShield AFMS = Adafruit_MotorShield();
 //Creates the motorshield object
 Adafruit_DCMotor *leftMotor = AFMS.getMotor(1);
 Adafruit_DCMotor *rightMotor = AFMS.getMotor(2);
-Adafruit_DCMotor *leafMotor = AFMS.getMotor(4);
 
 
 //SOUND STUFF
@@ -33,9 +32,9 @@ unsigned long moveMillis = millis(); // Starts counting time for how long an ang
 
 
 //LIGHT STUFF
-const int front = A13;
-const int right = A15;
-const int left = A11;
+const int front = 13;
+const int right = 15;
+const int left = 11;
 int x = 0;
 int y = 0;
 float xmult = 0;
@@ -60,13 +59,13 @@ Servo leaves3;
 int leavespos1 = pos; 
 int leavespos2 = pos;
 int leavespos3 = pos;
+
 void setup()
 {
   // MOTOR SHIELD SETUP
   AFMS.begin();
   leftMotor->setSpeed(dspeed);
   rightMotor->setSpeed(dspeed);
-  leafMotor->setSpeed(55);
   Serial.begin(9600);
   angle_deg = 0;
 
@@ -75,12 +74,12 @@ void setup()
   leaves2.attach(11);
   leaves3.attach(12);
 
-
 }
 
 void loop()
 {
-  //senseSound(false);
+
+  senseSound(false);
   senseLight(false);
 }
 
@@ -112,9 +111,9 @@ void senseSound(bool shouldPrint) {
   // collect data for 50 mS
   if (millis() - startMillis < sampleWindow)
   {
-    sample = analogRead(A13);
-    sample2 = analogRead(A9);
-    sample3 = analogRead(A11);
+    sample = analogRead(7);
+    sample2 = analogRead(9);
+    sample3 = analogRead(5);
     // Mic 1
     if (sample < 1024)  // toss out spurious readings
     {
@@ -217,6 +216,9 @@ void rotateandrun(int motor_speed, int angle) {
     if (millis() > (3000 / 140)*counter2) {
       pos -= 1;
       leaves1.write(pos); //0 means it is all the way up
+
+      leaves2.write(pos); 
+      leaves3.write(pos); 
       counter2 += 1;
     }
   }
@@ -233,14 +235,14 @@ void pullLeaves(bool up) {
     pos +=1;
     leaves1.write(pos);
     leaves2.write(pos);
-    leaves3.write(pos);   // tell servo to go to position in variable 'pos'
+//    leaves3.write(pos);   // tell servo to go to position in variable 'pos'
     delay(3);
   }
   if(pos >= uppos && up == true ){
     pos -= 1;
     leaves1.write(pos);
     leaves2.write(pos);
-    leaves3.write(pos); // tell servo to go to position in variable 'pos'
+//    leaves3.write(pos); // tell servo to go to position in variable 'pos'
     delay(3);
   }
 }
@@ -253,6 +255,7 @@ void senseLight(bool shouldPrint) {
   float rightVal = analogRead(right) + rightCal; 
   Serial.println("f" + String(frontVal) + "l" + String(leftVal) + "r" + String(rightVal));
   y = frontVal - (leftVal + rightVal)/2;
+
   x = leftVal - rightVal;
   // positive y = forward, positive x = left
   if (abs(x) > threshold_light or abs(y) > threshold_light) {
@@ -332,6 +335,8 @@ void rotateCommand(int degree) {
     if (millis() > abs(degree)*counter1 * 700.0 / (180 * 140)) {
       pos += 1;
       leaves1.write(pos); //0 means it is all the way up
+      leaves2.write(pos); //0 means it is all the way up
+      leaves3.write(pos); //0 means it is all the way up
       counter1 += 1;
     }
   }
