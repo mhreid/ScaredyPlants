@@ -43,44 +43,23 @@ float ymult = 0;
 
 const int threshold_light = 10;
 const int dspeed = 150;// default speed for wheels
-const int frontCal = -42; // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 300 in normal light
-const int leftCal = 4;
-const int rightCal = 29;
+const int frontCal = 0; // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 300 in normal light
+const int leftCal = 0;
+const int rightCal = 0;
 const float forwardbuffer = .2;
 
 //LEAF SERVO STUFF
 #include <Servo.h>
-<<<<<<< HEAD
 int uppos = 0; 
 int downpos = 140;
 int pos = uppos;  // 0 is open leaves, 140 is closed leaves
-bool goingup = false;
+bool up = false;
 Servo leaves1;  // create servo object to control a servo
 Servo leaves2;
 Servo leaves3;
 int leavespos1 = pos; 
 int leavespos2 = pos;
 int leavespos3 = pos;
-
-=======
-int uppos = 0;
-int downpos = 130;
-int pos = uppos;  // 0 is open leaves, 140 is closed leaves
-bool goingup = false;
-Servo leaf1;  // create servo object to control a servo
-Servo leaf2;
-Servo leaf3;
-Servo leaf4;
-Servo leaf5;
-Servo leaf6;
-int leafpos1 = pos;
-int leafpos2 = pos;
-int leafpos3 = pos;
-int leafpos4 = pos;
-int leafpos5 = pos;
-int leafpos6 = pos;
->>>>>>> 4e78bcf4bef3d2c097e9a124444027158ff035bf
-
 void setup()
 {
   // MOTOR SHIELD SETUP
@@ -92,29 +71,19 @@ void setup()
   angle_deg = 0;
 
   //SERVO ATTACH
-<<<<<<< HEAD
   leaves1.attach(10);
   leaves2.attach(11);
   leaves3.attach(12);
 
-    
-=======
-  leaf1.attach(10);
-  leaf2.attach(11);
-  leaf3.attach(12);
-  leaf4.attach(13);
-  leaf5.attach(14);
-  leaf6.attach(15);
 
->>>>>>> 4e78bcf4bef3d2c097e9a124444027158ff035bf
 }
-
 
 void loop()
 {
-//  senseSound(false);
+  //senseSound(false);
   senseLight(false);
 }
+
 
 // SOUND SENSING
 void senseSound(bool shouldPrint) {
@@ -238,8 +207,8 @@ void senseSound(bool shouldPrint) {
 void rotateandrun(int motor_speed, int angle) {
   rightMotor->setSpeed(motor_speed);
   leftMotor->setSpeed(motor_speed);
-  rotateCommand(angle - 180); // delay() goes in here
-  stopCommand();
+  //rotateCommand(angle - 180); // delay() goes in here
+  //stopCommand();
   leftMotor->run(FORWARD);
   rightMotor->run(FORWARD);
   int timecheck2 = millis();
@@ -247,19 +216,18 @@ void rotateandrun(int motor_speed, int angle) {
   while (millis() - timecheck2 < 3000) {
     if (millis() > (3000 / 140)*counter2) {
       pos -= 1;
-      leaf1.write(pos); //0 means it is all the way up
+      leaves1.write(pos); //0 means it is all the way up
       counter2 += 1;
     }
   }
   //pullLeaves(false);
-  stopCommand();
+//  stopCommand();
   angle_deg = 0;
 }
 
 
 // LEAF SHRINKING
 // TODO: Get rid of it and integrate the leaf movements into other actions.
-<<<<<<< HEAD
 void pullLeaves(bool up) {
    if(pos <= downpos && up == false){
     pos +=1;
@@ -274,40 +242,17 @@ void pullLeaves(bool up) {
     leaves2.write(pos);
     leaves3.write(pos); // tell servo to go to position in variable 'pos'
     delay(3);
-
-=======
-void pullLeaves(bool goingup) {
-  if (pos <= downpos && goingup == false) {
-    pos += 1;
-    leaf1.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(3);
-    if (pos == downpos) {
-      goingup = true;
-    }
-  }
-  if (pos >= uppos && goingup == true ) {
-    pos += -1;
-    leaf1.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(20);
-    if (pos == uppos) {
-      goingup = false;
-    }
->>>>>>> 4e78bcf4bef3d2c097e9a124444027158ff035bf
   }
 }
+
 
 //LIGHT SENSING
 void senseLight(bool shouldPrint) {
   float frontVal = analogRead(front) + frontCal;
   float leftVal = analogRead(left) + leftCal;
-<<<<<<< HEAD
   float rightVal = analogRead(right) + rightCal; 
-  #Serial.println("f" + String(frontVal) + "l" + String(leftVal) + "r" + String(rightVal));
+  Serial.println("f" + String(frontVal) + "l" + String(leftVal) + "r" + String(rightVal));
   y = frontVal - (leftVal + rightVal)/2;
-=======
-  float rightVal = analogRead(right) + rightCal;
-  y = frontVal - (leftVal + rightVal) / 2;
->>>>>>> 4e78bcf4bef3d2c097e9a124444027158ff035bf
   x = leftVal - rightVal;
   // positive y = forward, positive x = left
   if (abs(x) > threshold_light or abs(y) > threshold_light) {
@@ -386,7 +331,7 @@ void rotateCommand(int degree) {
   while (millis() - timecheck < abs(degree) * 700.0 / 180) {
     if (millis() > abs(degree)*counter1 * 700.0 / (180 * 140)) {
       pos += 1;
-      leaf1.write(pos); //0 means it is all the way up
+      leaves1.write(pos); //0 means it is all the way up
       counter1 += 1;
     }
   }
