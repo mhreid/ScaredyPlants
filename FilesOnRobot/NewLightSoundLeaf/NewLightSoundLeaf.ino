@@ -13,6 +13,7 @@
 #include <Adafruit_MotorShield.h>
 #include "utility/Adafruit_MS_PWMServoDriver.h"
 
+
 //includes the motorshield required libraries
 Adafruit_MotorShield AFMS = Adafruit_MotorShield();
 //Creates the motorshield object
@@ -68,13 +69,13 @@ class LightSensor {
 };
 
 const int threshold_light = 10;
-const int dspeed = 150;// default speed for wheels
-const LightSensor *f = new LightSensor(fLight); // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 800 in normal light
-const LightSensor *fr = new LightSensor(frLight);
-const LightSensor *fl = new LightSensor(flLight);
-const LightSensor *b = new LightSensor(bLight);
-const LightSensor *br = new LightSensor(brLight);
-const LightSensor *bl = new LightSensor(blLight);
+const int dspeed = 70;// default speed for wheels
+LightSensor *f = new LightSensor(fLight); // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 800 in normal light
+LightSensor *fr = new LightSensor(frLight);
+LightSensor *fl = new LightSensor(flLight);
+LightSensor *b = new LightSensor(bLight);
+LightSensor *br = new LightSensor(brLight);
+LightSensor *bl = new LightSensor(blLight);
 //const int fCal = -22 - 17; // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 800 in normal light
 //const int frCal = -56 + 34;
 //const int flCal = 54 - 54;
@@ -109,8 +110,9 @@ void setup()
   AFMS.begin();
   leftMotor->setSpeed(dspeed);
   rightMotor->setSpeed(dspeed);
-  Serial.begin(9600);
-  angle_deg = 0;
+
+  // SERIAL SETUP
+  Serial1.begin(9600);
 
   //SERVO ATTACH
   leaves1.attach(10);
@@ -123,7 +125,6 @@ void setup()
 
 void loop()
 {
-
   //  senseSound(false);
   senseLight(true);
 }
@@ -137,6 +138,7 @@ void loop()
 */
 void calibrateLight() {
   // Set motor speeds to appropriate values
+  delay(10000);
   leftMotor->setSpeed(70);
   rightMotor->setSpeed(70);
   leftMotor->run(FORWARD);
@@ -145,7 +147,7 @@ void calibrateLight() {
   // Rotate the robot
   // TODO: find appropriate stop time
   long startMillis = millis();
-  while (millis() - startMillis < 360 * 500) {
+  while (millis() - startMillis < 360 * 400) {
     f->updateMinMax();
     fr->updateMinMax();
     fl->updateMinMax();
@@ -157,8 +159,8 @@ void calibrateLight() {
   // Re-set motor speeds
   leftMotor->setSpeed(dspeed);
   rightMotor->setSpeed(dspeed);
-  leftMotor->run(FORWARD);
-  rightMotor->run(FORWARD);
+  leftMotor->run(RELEASE);
+  rightMotor->run(RELEASE);
 }
 
 void senseSound(bool shouldPrint) {
@@ -321,45 +323,44 @@ void pullLeaves(bool up) {
   }
 }
 
+int sign(float x) {
+  return x < 0 ? -1 : 1;
+}
 
 //LIGHT SENSING
 void senseLight(bool shouldPrint) {
-  y = f->val() + 0.5 * (fr->val() + fl->val()) - (b->val() + 0.5 * (br->val() + bl->val()));
+  y = b->val() + 0.5 * (br->val() + bl->val()) - (f->val() + 0.5 * (fr->val() + fl->val()));
   x = sqrt(3) / 2 * (fl->val() + bl->val() - fr->val() - br->val());
-  // positive y = forward, positive x = left
-  if (abs(x) > threshold_light or abs(y) > threshold_light) {
-    // Scale down x and y
-    xmult = x;
-    ymult = y;
-    float vSum = sqrt(xmult * xmult + ymult * ymult); // vL + vR = magnitude
-    float vDiff = xmult / ymult; // vL - vR = ratio
-    float vL = (vSum + vDiff) / 2;
-    float vR = (vSum - vL);
-
-    Serial.print(x);
-    Serial.print("\t");
-    Serial.println(y);
+  // Scale it if needed
+  xmult = x / 1;
+  ymult = y / 1;
+  float vSum = dspeed * sqrt(xmult * xmult + ymult * ymult) * sign(xmult); // vL + vR = magnitude * direction
+  float vDiff = xmult / ymult; // vL - vR = ratio
+  float vL = (vSum + vDiff) / 2;
+  float vR = (vSum - vL);
+  if (abs(vL) > dspeed || abs(vR) > dspeed) {
+    runCommand(vL, vR);
   } else {
     stopCommand();
   }
+
   if (shouldPrint) {
-    Serial.print("f ");
-    Serial.print(f->val());
-    Serial.print("\t fl ");
-    Serial.print(fl->val());
-    Serial.print("\t fr ");
-    Serial.println(fr->val());
+    Serial1.print(vL);
+    Serial1.print("\t");
+    Serial1.println(vR);
+    Serial1.print("f ");
+    Serial1.print(f->val());
+    Serial1.print("\t fl ");
+    Serial1.print(fl->val());
+    Serial1.print("\t fr ");
+    Serial1.println(fr->val());
 
-    Serial.print("b ");
-    Serial.print(b->val());
-    Serial.print("\t bl ");
-    Serial.print(bl->val());
-    Serial.print("\t br ");
-    Serial.println(br->val());
-
-    //    Serial.print(xmult);
-    //    Serial.print("\t");
-    //    Serial.println(ymult);
+    Serial1.print("b ");
+    Serial1.print(b->val());
+    Serial1.print("\t bl ");
+    Serial1.print(bl->val());
+    Serial1.print("\t br ");
+    Serial1.println(br->val());
   }
 }
 
@@ -396,7 +397,7 @@ void runCommand(int forwardspeed, int turnspeed) {
 
 // Helper function to set the wheels' speeds
 void rotateCommand(int degree) {
-  Serial.println(degree);
+  Serial1.println(degree);
   int timecheck = millis();
   int counter1 = 1;
   leftMotor->run(degree > 0 ? FORWARD : BACKWARD);
