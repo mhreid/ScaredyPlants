@@ -35,19 +35,31 @@ const int leftSound = 0;
 
 
 //LIGHT STUFF
-const int front = A15;
-const int right = A14;
-const int left = A13;
-int x = 0;
-int y = 0;
+const int fLight = A15;
+const int frLight = A14;
+const int flLight = A10;
+const int bLight = A12;
+const int brLight = A13;
+const int blLight = A11;
+float x = 0;
+float y = 0;
 float xmult = 0;
 float ymult = 0;
 
 const int threshold_light = 10;
 const int dspeed = 150;// default speed for wheels
-const int frontCal = -9; // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 800 in normal light
-const int leftCal = -10;
-const int rightCal = -25;
+const int fCal = -22 - 17; // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 800 in normal light
+const int frCal = -56 + 34;
+const int flCal = 54 - 54;
+const int bCal = -29 - 14;
+const int brCal = -92 + 79;
+const int blCal = 12 - 46;
+//const int fCal = -22; // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 800 in normal light
+//const int frCal = -56;
+//const int flCal = 54;
+//const int bCal = -29;
+//const int brCal = -92;
+//const int blCal = 12;
 const float forwardbuffer = .2;
 
 
@@ -82,8 +94,8 @@ void setup()
 void loop()
 {
 
-  senseSound(false);
-//  senseLight(false);
+  //  senseSound(false);
+  senseLight(true);
 }
 
 
@@ -201,7 +213,7 @@ void senseSound(bool shouldPrint) {
     // TODO: Need to fix this function to "simulate" two behaviors in parallel
     if (angle_deg > 0) {
       Serial.print("Sound detected: "); Serial.println(angle_deg);
-//      rotateandrun(dspeed, angle_deg);
+      //      rotateandrun(dspeed, angle_deg);
     }
     startMillis = 0; // Flag 0 to reset everything
   }
@@ -224,7 +236,7 @@ void rotateandrun(int motor_speed, int angle) {
     }
   }
   //pullLeaves(false);
-//  stopCommand();
+  //  stopCommand();
   angle_deg = 0;
 }
 
@@ -232,14 +244,14 @@ void rotateandrun(int motor_speed, int angle) {
 // LEAF SHRINKING
 // TODO: Get rid of it and integrate the leaf movements into other actions.
 void pullLeaves(bool up) {
-   if(pos <= downpos && up == false){
-    pos +=1;
+  if (pos <= downpos && up == false) {
+    pos += 1;
     leaves1.write(pos);
     leaves2.write(pos);
     leaves3.write(pos);   // tell servo to go to position in variable 'pos'
     delay(3);
   }
-  if(pos >= uppos && up == true ){
+  if (pos >= uppos && up == true ) {
     pos -= 1;
     leaves1.write(pos);
     leaves2.write(pos);
@@ -251,11 +263,14 @@ void pullLeaves(bool up) {
 
 //LIGHT SENSING
 void senseLight(bool shouldPrint) {
-  float frontVal = analogRead(front) + frontCal;
-  float leftVal = analogRead(left) + leftCal;
-  float rightVal = analogRead(right) + rightCal;
-  y = frontVal - (leftVal + rightVal)/2;
-  x = leftVal - rightVal;
+  float f = analogRead(fLight) + fCal;
+  float fr = analogRead(frLight) + frCal;
+  float fl = analogRead(flLight) + flCal;
+  float b = analogRead(bLight) + bCal;
+  float br = analogRead(brLight) + brCal;
+  float bl = analogRead(blLight) + blCal;
+  y = f + 0.5 * (fr + fl) - (b + 0.5 * (br + bl));
+  x = sqrt(3)/2*(fl + bl - fr - br) + 165;
   // positive y = forward, positive x = left
   if (abs(x) > threshold_light or abs(y) > threshold_light) {
     // Scale down x and y
@@ -275,27 +290,41 @@ void senseLight(bool shouldPrint) {
     //This makes speed exponential based on proximity
     ymult *= ymult;
     //Serial.println(ymult);
-    if(ymult > .5){
+    if (ymult > .5) {
       pullLeaves(true);
     }
-     else{
+    else {
       pullLeaves(false);
-     }
+    }
 
     // speeds are from 0 to dspeed
     int turnspeed = dspeed * ymult * (1 - xmult); // turnspeed <= forwardspeed
     int forwardspeed = dspeed * ymult;
-
+    Serial.print(x);
+    Serial.print("\t");
+    Serial.println(y);
     runCommand(forwardspeed, turnspeed);
   } else {
     stopCommand();
   }
   if (shouldPrint) {
-    Serial.print(x);
-    Serial.print("\t");
-    Serial.println(y);
-    Serial.print("\t");
-    Serial.println(rightVal);
+    Serial.print("f ");
+    Serial.print(f);
+    Serial.print("\t fl ");
+    Serial.print(fl);
+    Serial.print("\t fr ");
+    Serial.println(fr);
+
+    Serial.print("b ");
+    Serial.print(b);
+    Serial.print("\t bl ");
+    Serial.print(bl);
+    Serial.print("\t br ");
+    Serial.println(br);
+
+    //    Serial.print(xmult);
+    //    Serial.print("\t");
+    //    Serial.println(ymult);
   }
 }
 
@@ -304,19 +333,19 @@ void senseLight(bool shouldPrint) {
 void runCommand(int forwardspeed, int turnspeed) {
   if (x > 0) {
     // Turn left
-    rightMotor->setSpeed(forwardspeed);
-    leftMotor->setSpeed(turnspeed);
+    rightMotor->setSpeed(forwardspeed > 150 ? 150 : forwardspeed);
+    leftMotor->setSpeed(turnspeed > 150 ? 150 : turnspeed);
   } else {
     // Turn right
-    rightMotor->setSpeed(turnspeed);
-    leftMotor->setSpeed(forwardspeed);
+    rightMotor->setSpeed(turnspeed > 150 ? 150 : turnspeed);
+    leftMotor->setSpeed(turnspeed > 150 ? 150 : turnspeed);
   }
   //leftMotor->run(y > 0 ? FORWARD : BACKWARD); // Conditional tenary operator
   //rightMotor->run(y > 0 ? FORWARD : BACKWARD);
-  if(y < 0){
+  if (y < 0) {
     rightMotor->run(FORWARD);
     leftMotor->run(FORWARD);
-  }else{
+  } else {
     rightMotor->run(BACKWARD);
     leftMotor->run(BACKWARD);
   }
