@@ -18,7 +18,6 @@ Adafruit_MotorShield AFMS = Adafruit_MotorShield();
 //Creates the motorshield object
 Adafruit_DCMotor *leftMotor = AFMS.getMotor(1);
 Adafruit_DCMotor *rightMotor = AFMS.getMotor(2);
-Adafruit_DCMotor *leafMotor = AFMS.getMotor(4);
 
 
 //SOUND STUFF
@@ -70,7 +69,6 @@ void setup()
   AFMS.begin();
   leftMotor->setSpeed(dspeed);
   rightMotor->setSpeed(dspeed);
-  leafMotor->setSpeed(55);
   Serial.begin(9600);
   angle_deg = 0;
 
@@ -78,7 +76,6 @@ void setup()
   leaves1.attach(10);
   leaves2.attach(11);
   leaves3.attach(12);
-
 
 }
 
