@@ -18,6 +18,7 @@ Adafruit_MotorShield AFMS = Adafruit_MotorShield();
 //Creates the motorshield object
 Adafruit_DCMotor *leftMotor = AFMS.getMotor(1);
 Adafruit_DCMotor *rightMotor = AFMS.getMotor(2);
+Adafruit_DCMotor *leafMotor = AFMS.getMotor(4);
 
 
 //SOUND STUFF
@@ -35,9 +36,9 @@ const int leftSound = 0;
 
 
 //LIGHT STUFF
-const int front = 13;
-const int right = 15;
-const int left = 11;
+const int front = A15;
+const int right = A14;
+const int left = A13;
 int x = 0;
 int y = 0;
 float xmult = 0;
@@ -45,31 +46,31 @@ float ymult = 0;
 
 const int threshold_light = 10;
 const int dspeed = 150;// default speed for wheels
-const int frontCal = 0; // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 300 in normal light
-const int leftCal = 0;
-const int rightCal = 0;
+const int frontCal = -9; // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 800 in normal light
+const int leftCal = -10;
+const int rightCal = -25;
 const float forwardbuffer = .2;
 
 
 //LEAF SERVO STUFF
 #include <Servo.h>
-int uppos = 0; 
+int uppos = 0;
 int downpos = 140;
 int pos = uppos;  // 0 is open leaves, 140 is closed leaves
 bool up = false;
 Servo leaves1;  // create servo object to control a servo
 Servo leaves2;
 Servo leaves3;
-int leavespos1 = pos; 
+int leavespos1 = pos;
 int leavespos2 = pos;
 int leavespos3 = pos;
-
 void setup()
 {
   // MOTOR SHIELD SETUP
   AFMS.begin();
   leftMotor->setSpeed(dspeed);
   rightMotor->setSpeed(dspeed);
+  leafMotor->setSpeed(55);
   Serial.begin(9600);
   angle_deg = 0;
 
@@ -78,17 +79,18 @@ void setup()
   leaves2.attach(11);
   leaves3.attach(12);
 
+
 }
 
 void loop()
 {
 
-  senseSound(true);
+  senseSound(false);
 //  senseLight(false);
 }
 
 
-// SOUND SENSING  
+// SOUND SENSING
 void senseSound(bool shouldPrint) {
   static unsigned long startMillis;  // Start of sample window
   int peakToPeak = 0;   // peak-to-peak level
@@ -111,6 +113,7 @@ void senseSound(bool shouldPrint) {
     signalMin = 1024;
     signalMin2 = 1024;
     signalMin3 = 1024;
+    angle_deg = 0;
   }
   // collect data for 50 mS
   if (millis() - startMillis < sampleWindow)
@@ -196,14 +199,11 @@ void senseSound(bool shouldPrint) {
       Serial.print("Mic Back: "); Serial.print(signalMax - 32); Serial.print("\t");
       Serial.print("Mic Left: "); Serial.print(signalMax2 - 37); Serial.print("\t");
       Serial.print("Mic Right: "); Serial.print(signalMax3 - 48); Serial.println("\t");
-      
     }
 
     // TODO: Need to fix this function to "simulate" two behaviors in parallel
     if (angle_deg > 0) {
       Serial.print("Sound detected: "); Serial.println(angle_deg);
-      delay(2000);
-      angle_deg = 0;
 //      rotateandrun(dspeed, angle_deg);
     }
     startMillis = 0; // Flag 0 to reset everything
@@ -223,9 +223,6 @@ void rotateandrun(int motor_speed, int angle) {
     if (millis() > (3000 / 140)*counter2) {
       pos -= 1;
       leaves1.write(pos); //0 means it is all the way up
-
-      leaves2.write(pos); 
-      leaves3.write(pos); 
       counter2 += 1;
     }
   }
@@ -242,14 +239,14 @@ void pullLeaves(bool up) {
     pos +=1;
     leaves1.write(pos);
     leaves2.write(pos);
-//    leaves3.write(pos);   // tell servo to go to position in variable 'pos'
+    leaves3.write(pos);   // tell servo to go to position in variable 'pos'
     delay(3);
   }
   if(pos >= uppos && up == true ){
     pos -= 1;
     leaves1.write(pos);
     leaves2.write(pos);
-//    leaves3.write(pos); // tell servo to go to position in variable 'pos'
+    leaves3.write(pos); // tell servo to go to position in variable 'pos'
     delay(3);
   }
 }
@@ -259,10 +256,8 @@ void pullLeaves(bool up) {
 void senseLight(bool shouldPrint) {
   float frontVal = analogRead(front) + frontCal;
   float leftVal = analogRead(left) + leftCal;
-  float rightVal = analogRead(right) + rightCal; 
-  Serial.println("f" + String(frontVal) + "l" + String(leftVal) + "r" + String(rightVal));
+  float rightVal = analogRead(right) + rightCal;
   y = frontVal - (leftVal + rightVal)/2;
-
   x = leftVal - rightVal;
   // positive y = forward, positive x = left
   if (abs(x) > threshold_light or abs(y) > threshold_light) {
@@ -282,7 +277,7 @@ void senseLight(bool shouldPrint) {
     }
     //This makes speed exponential based on proximity
     ymult *= ymult;
-    Serial.println(ymult);
+    //Serial.println(ymult);
     if(ymult > .5){
       pullLeaves(true);
     }
@@ -299,9 +294,9 @@ void senseLight(bool shouldPrint) {
     stopCommand();
   }
   if (shouldPrint) {
-    Serial.print(frontVal);
+    Serial.print(x);
     Serial.print("\t");
-    Serial.print(leftVal);
+    Serial.println(y);
     Serial.print("\t");
     Serial.println(rightVal);
   }
@@ -342,8 +337,6 @@ void rotateCommand(int degree) {
     if (millis() > abs(degree)*counter1 * 700.0 / (180 * 140)) {
       pos += 1;
       leaves1.write(pos); //0 means it is all the way up
-      leaves2.write(pos); //0 means it is all the way up
-      leaves3.write(pos); //0 means it is all the way up
       counter1 += 1;
     }
   }
