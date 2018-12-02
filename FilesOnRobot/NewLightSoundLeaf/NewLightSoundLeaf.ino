@@ -23,12 +23,15 @@ Adafruit_DCMotor *rightMotor = AFMS.getMotor(2);
 //SOUND STUFF
 // Sets up Variables that will be used
 const int sampleWindow = 100; // Sample window width in mS (50 mS = 20Hz)
-unsigned int sample;
-unsigned int sample2;
-unsigned int sample3;
+unsigned int sampleBack;
+unsigned int sampleRight;
+unsigned int sampleLeft;
 unsigned int angle_deg = 0;
 int threshold_sound = 50;
 unsigned long moveMillis = millis(); // Starts counting time for how long an angle has been given
+const int backSound = 2;
+const int rightSound = 8;
+const int leftSound = 0;
 
 
 //LIGHT STUFF
@@ -46,6 +49,7 @@ const int frontCal = 0; // Need to calibrate xcal and ycal under the normal ligh
 const int leftCal = 0;
 const int rightCal = 0;
 const float forwardbuffer = .2;
+
 
 //LEAF SERVO STUFF
 #include <Servo.h>
@@ -79,24 +83,24 @@ void setup()
 void loop()
 {
 
-  senseSound(false);
-  senseLight(false);
+  senseSound(true);
+//  senseLight(false);
 }
 
 
-// SOUND SENSING
+// SOUND SENSING  
 void senseSound(bool shouldPrint) {
   static unsigned long startMillis;  // Start of sample window
-  unsigned int peakToPeak = 0;   // peak-to-peak level
-  unsigned int peakToPeak2 = 0; // Mic 2
-  unsigned int peakToPeak3 = 0; // Mic 3
+  int peakToPeak = 0;   // peak-to-peak level
+  int peakToPeak2 = 0; // Mic 2
+  int peakToPeak3 = 0; // Mic 3
 
-  static unsigned int signalMax; // Mic 1
-  static unsigned int signalMin;
-  static unsigned int signalMax2; // Mic 2
-  static unsigned int signalMin2;
-  static unsigned int signalMax3; // Mic 3
-  static unsigned int signalMin3;
+  static int signalMax; // Mic 1
+  static int signalMin;
+  static int signalMax2; // Mic 2
+  static int signalMin2;
+  static int signalMax3; // Mic 3
+  static int signalMin3;
 
 
   if (startMillis == 0) { // Re-initialize everything
@@ -111,93 +115,96 @@ void senseSound(bool shouldPrint) {
   // collect data for 50 mS
   if (millis() - startMillis < sampleWindow)
   {
-    sample = analogRead(7);
-    sample2 = analogRead(9);
-    sample3 = analogRead(5);
+    sampleBack = analogRead(backSound);
+    sampleLeft = analogRead(leftSound);
+    sampleRight = analogRead(rightSound);
     // Mic 1
-    if (sample < 1024)  // toss out spurious readings
+    if (sampleBack < 1024)  // toss out spurious readings
     {
-      if (sample > signalMax)
+      if (sampleBack > signalMax)
       {
-        signalMax = sample;  // save just the max levels
+        signalMax = sampleBack;  // save just the max levels
       }
-      else if (sample < signalMin)
+      else if (sampleBack < signalMin)
       {
-        signalMin = sample;  // save just the min levels
+        signalMin = sampleBack;  // save just the min levels
       }
     }
     // Mic 2
-    if (sample2 < 1024)  // toss out spurious readings
+    if (sampleLeft < 1024)  // toss out spurious readings
     {
-      if (sample2 > signalMax2)
+      if (sampleLeft > signalMax2)
       {
-        signalMax2 = sample2;  // save just the max levels
+        signalMax2 = sampleLeft;  // save just the max levels
       }
-      else if (sample2 < signalMin2)
+      else if (sampleLeft < signalMin2)
       {
-        signalMin2 = sample2;  // save just the min levels
+        signalMin2 = sampleLeft;  // save just the min levels
       }
     }
     // Mic 3
-    if (sample3 < 1024)  // toss out spurious readings
+    if (sampleRight < 1024)  // toss out spurious readings
     {
-      if (sample3 > signalMax3)
+      if (sampleRight > signalMax3)
       {
-        signalMax3 = sample3;  // save just the max levels
+        signalMax3 = sampleRight;  // save just the max levels
       }
-      else if (sample3 < signalMin3)
+      else if (sampleRight < signalMin3)
       {
-        signalMin3 = sample3;  // save just the min levels
+        signalMin3 = sampleRight;  // save just the min levels
       }
     }
   } else {
-    peakToPeak = signalMax - signalMin;  // max - min = peak-peak amplitude
-    double volts = 1500 * (peakToPeak * 5.0) / 1024;  // convert to volts
+    peakToPeak = abs(signalMax - 32);  // max - min = peak-peak amplitude
+    double voltsBack = 1000 * (peakToPeak * 5.0) / 1024;  // convert to volts
     // Mic 2
-    peakToPeak2 = signalMax2 - signalMin2;  // max - min = peak-peak amplitude
-    double volts2 = 1000 * (peakToPeak2 * 5.0) / 1024;  // convert to volts
+    peakToPeak2 = abs(signalMax2 - 37);  // max - min = peak-peak amplitude
+    double voltsLeft = 1000 * (peakToPeak2 * 5.0) / 1024;  // convert to volts
     // Mic 3
-    peakToPeak3 = signalMax3 - signalMin3;  // max - min = peak-peak amplitude
-    double volts3 = 1000 * (peakToPeak3 * 5.0) / 1024;  // convert to volts
+    peakToPeak3 = abs(signalMax3 - 48);  // max - min = peak-peak amplitude
+    double voltsRight = 1000 * (peakToPeak3 * 5.0) / 1024;  // convert to volts
 
-    if (volts > threshold_sound || volts2 > threshold_sound || volts3 > threshold_sound) {
-      if (volts > volts2) {
-        if (volts3 > volts2) {
-          if (volts3 > volts) {
-            angle_deg = 270;
+    if (voltsBack > threshold_sound || voltsLeft > threshold_sound || voltsRight > threshold_sound) {
+      if (voltsBack > voltsLeft) {
+        if (voltsRight > voltsLeft) {
+          if (voltsRight > voltsBack) {
+            angle_deg = 90; // R > B > L
           }
           else {
-            angle_deg = 330;
+            angle_deg = 150; // B > R > L
           }
         }
         else {
-          angle_deg = 30;
+          angle_deg = 210; // B > L > R
         }
       }
       else {
-        if (volts2 > volts3) {
-          if (volts > volts3) {
-            angle_deg = 90;
+        if (voltsLeft > voltsRight) {
+          if (voltsBack > voltsRight) {
+            angle_deg = 270; // L > B > R
           }
           else {
-            angle_deg = 150;
+            angle_deg = 330; // L > R > B
           }
         } else {
-          angle_deg = 210;
+          angle_deg = 30; // R > L > B
         }
       }
     };
 
     if (shouldPrint) {
-      Serial.print("Mic 1: "); Serial.print(volts); Serial.print("\t");
-      Serial.print("Mic 2: "); Serial.print(volts2); Serial.print("\t");
-      Serial.print("Mic 3: "); Serial.print(volts3); Serial.println("\t");
-      Serial.print("Sound detected: "); Serial.println(angle_deg);
+      Serial.print("Mic Back: "); Serial.print(signalMax - 32); Serial.print("\t");
+      Serial.print("Mic Left: "); Serial.print(signalMax2 - 37); Serial.print("\t");
+      Serial.print("Mic Right: "); Serial.print(signalMax3 - 48); Serial.println("\t");
+      
     }
 
     // TODO: Need to fix this function to "simulate" two behaviors in parallel
     if (angle_deg > 0) {
-      rotateandrun(dspeed, angle_deg);
+      Serial.print("Sound detected: "); Serial.println(angle_deg);
+      delay(2000);
+      angle_deg = 0;
+//      rotateandrun(dspeed, angle_deg);
     }
     startMillis = 0; // Flag 0 to reset everything
   }
