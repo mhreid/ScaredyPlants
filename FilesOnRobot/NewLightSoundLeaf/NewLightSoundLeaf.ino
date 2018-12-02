@@ -45,15 +45,42 @@ float x = 0;
 float y = 0;
 float xmult = 0;
 float ymult = 0;
+class LightSensor {
+  public:
+    int min = 1024;
+    int max = 0;
+    int pin;
+    LightSensor(int pin) {
+      this->pin = pin;
+    }
+    int mean() {
+      return (min + max) / 2;
+    }
+    float val() {
+      float pinVal = analogRead(pin); // Convert to float
+      return pinVal * (max - min) / max - min + 500; // Scale it, then shift it to 500
+    }
+    int updateMinMax() {
+      int value = analogRead(pin);
+      if (value < this->min) this->min = value;
+      if (value > this->max) this->max = value;
+    }
+};
 
 const int threshold_light = 10;
 const int dspeed = 150;// default speed for wheels
-const int fCal = -22 - 17; // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 800 in normal light
-const int frCal = -56 + 34;
-const int flCal = 54 - 54;
-const int bCal = -29 - 14;
-const int brCal = -92 + 79;
-const int blCal = 12 - 46;
+const LightSensor *f = new LightSensor(fLight); // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 800 in normal light
+const LightSensor *fr = new LightSensor(frLight);
+const LightSensor *fl = new LightSensor(flLight);
+const LightSensor *b = new LightSensor(bLight);
+const LightSensor *br = new LightSensor(brLight);
+const LightSensor *bl = new LightSensor(blLight);
+//const int fCal = -22 - 17; // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 800 in normal light
+//const int frCal = -56 + 34;
+//const int flCal = 54 - 54;
+//const int bCal = -29 - 14;
+//const int brCal = -92 + 79;
+//const int blCal = 12 - 46;
 //const int fCal = -22; // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 800 in normal light
 //const int frCal = -56;
 //const int flCal = 54;
@@ -75,6 +102,7 @@ Servo leaves3;
 int leavespos1 = pos;
 int leavespos2 = pos;
 int leavespos3 = pos;
+
 void setup()
 {
   // MOTOR SHIELD SETUP
@@ -89,6 +117,8 @@ void setup()
   leaves2.attach(11);
   leaves3.attach(12);
 
+  // LIGHT CALIBRATION
+  calibrateLight();
 }
 
 void loop()
@@ -100,6 +130,37 @@ void loop()
 
 
 // SOUND SENSING
+/**
+   Initially rotate 360 degrees to calibrate the offsets
+   of the light sensors. Each iteration will update the
+   max and the min values of the light sensors.
+*/
+void calibrateLight() {
+  // Set motor speeds to appropriate values
+  leftMotor->setSpeed(70);
+  rightMotor->setSpeed(70);
+  leftMotor->run(FORWARD);
+  rightMotor->run(BACKWARD);
+
+  // Rotate the robot
+  // TODO: find appropriate stop time
+  long startMillis = millis();
+  while (millis() - startMillis < 360 * 500) {
+    f->updateMinMax();
+    fr->updateMinMax();
+    fl->updateMinMax();
+    b->updateMinMax();
+    br->updateMinMax();
+    bl->updateMinMax();
+  }
+
+  // Re-set motor speeds
+  leftMotor->setSpeed(dspeed);
+  rightMotor->setSpeed(dspeed);
+  leftMotor->run(FORWARD);
+  rightMotor->run(FORWARD);
+}
+
 void senseSound(bool shouldPrint) {
   static unsigned long startMillis;  // Start of sample window
   int peakToPeak = 0;   // peak-to-peak level
@@ -263,14 +324,8 @@ void pullLeaves(bool up) {
 
 //LIGHT SENSING
 void senseLight(bool shouldPrint) {
-  float f = analogRead(fLight) + fCal;
-  float fr = analogRead(frLight) + frCal;
-  float fl = analogRead(flLight) + flCal;
-  float b = analogRead(bLight) + bCal;
-  float br = analogRead(brLight) + brCal;
-  float bl = analogRead(blLight) + blCal;
-  y = f + 0.5 * (fr + fl) - (b + 0.5 * (br + bl));
-  x = sqrt(3)/2*(fl + bl - fr - br) + 165;
+  y = f->val() + 0.5 * (fr->val() + fl->val()) - (b->val() + 0.5 * (br->val() + bl->val()));
+  x = sqrt(3) / 2 * (fl->val() + bl->val() - fr->val() - br->val());
   // positive y = forward, positive x = left
   if (abs(x) > threshold_light or abs(y) > threshold_light) {
     // Scale down x and y
@@ -309,18 +364,18 @@ void senseLight(bool shouldPrint) {
   }
   if (shouldPrint) {
     Serial.print("f ");
-    Serial.print(f);
+    Serial.print(f->val());
     Serial.print("\t fl ");
-    Serial.print(fl);
+    Serial.print(fl->val());
     Serial.print("\t fr ");
-    Serial.println(fr);
+    Serial.println(fr->val());
 
     Serial.print("b ");
-    Serial.print(b);
+    Serial.print(b->val());
     Serial.print("\t bl ");
-    Serial.print(bl);
+    Serial.print(bl->val());
     Serial.print("\t br ");
-    Serial.println(br);
+    Serial.println(br->val());
 
     //    Serial.print(xmult);
     //    Serial.print("\t");
