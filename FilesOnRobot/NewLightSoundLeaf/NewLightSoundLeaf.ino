@@ -58,7 +58,7 @@ class LightSensor {
     }
     float val() {
       float pinVal = analogRead(pin); // Convert to float
-      return pinVal * (max - min) / max - min + 500; // Scale it, then shift it to 500
+      return (pinVal - min) / (max - min); // Convert to percentage
     }
     int updateMinMax() {
       int value = analogRead(pin);
@@ -329,36 +329,16 @@ void senseLight(bool shouldPrint) {
   // positive y = forward, positive x = left
   if (abs(x) > threshold_light or abs(y) > threshold_light) {
     // Scale down x and y
-    xmult = abs(x) / 100.0;
-    ymult = abs(y) / 50.0;
+    xmult = x;
+    ymult = y;
+    float vSum = sqrt(xmult * xmult + ymult * ymult); // vL + vR = magnitude
+    float vDiff = xmult / ymult; // vL - vR = ratio
+    float vL = (vSum + vDiff) / 2;
+    float vR = (vSum - vL);
 
-    // xmult is from 0 to 1
-    if (xmult > 1) {
-      xmult = 1;
-    }
-
-    // ymult is from 0.2 to 1
-    ymult += forwardbuffer;
-    if (ymult > 1) {
-      ymult = 1;
-    }
-    //This makes speed exponential based on proximity
-    ymult *= ymult;
-    //Serial.println(ymult);
-    if (ymult > .5) {
-      pullLeaves(true);
-    }
-    else {
-      pullLeaves(false);
-    }
-
-    // speeds are from 0 to dspeed
-    int turnspeed = dspeed * ymult * (1 - xmult); // turnspeed <= forwardspeed
-    int forwardspeed = dspeed * ymult;
     Serial.print(x);
     Serial.print("\t");
     Serial.println(y);
-    runCommand(forwardspeed, turnspeed);
   } else {
     stopCommand();
   }
@@ -383,6 +363,13 @@ void senseLight(bool shouldPrint) {
   }
 }
 
+// Helper function to set the wheels' speeds
+void runCommand(float vL, float vR) {
+  leftMotor->setSpeed(abs(vL) > 150 ? 150 : abs(vL)); // Conditional tenary operator
+  rightMotor->setSpeed(abs(vR) > 150 ? 150 : abs(vR));
+  leftMotor->run(vL > 0 ? FORWARD : BACKWARD);
+  rightMotor->run(vR > 0 ? FORWARD : BACKWARD);
+}
 
 // Helper function to set the wheels' speeds
 void runCommand(int forwardspeed, int turnspeed) {
