@@ -42,24 +42,28 @@ const int flLight = A10;
 const int bLight = A12;
 const int brLight = A13;
 const int blLight = A11;
-float x = 0;
-float y = 0;
-float xmult = 0;
-float ymult = 0;
 class LightSensor {
   public:
     int min = 1024;
     int max = 0;
     int pin;
+    int calValue;
     LightSensor(int pin) {
       this->pin = pin;
+      this->calValue = 0;
+    }
+    LightSensor(int pin, int calValue) {
+      this->pin = pin;
+      this->calValue = calValue;
     }
     int mean() {
       return (min + max) / 2;
     }
     float val() {
-      float pinVal = analogRead(pin); // Convert to float
-      return (pinVal - min) / (max - min); // Convert to percentage
+      return analog() + this->calValue;
+    }
+    int analog() {
+      return analogRead(pin);
     }
     int updateMinMax() {
       int value = analogRead(pin);
@@ -68,8 +72,8 @@ class LightSensor {
     }
 };
 
-const int threshold_light = 10;
-const int dspeed = 70;// default speed for wheels
+const int threshold_light = 70;
+const int dspeed = 70; // default speed for wheels
 LightSensor *f = new LightSensor(fLight); // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 800 in normal light
 LightSensor *fr = new LightSensor(frLight);
 LightSensor *fl = new LightSensor(flLight);
@@ -88,7 +92,6 @@ LightSensor *bl = new LightSensor(blLight);
 //const int bCal = -29;
 //const int brCal = -92;
 //const int blCal = 12;
-const float forwardbuffer = .2;
 
 
 //LEAF SERVO STUFF
@@ -108,10 +111,9 @@ void setup()
 {
   // MOTOR SHIELD SETUP
   AFMS.begin();
-  leftMotor->setSpeed(dspeed);
-  rightMotor->setSpeed(dspeed);
 
-  // SERIAL SETUP
+  // SERIAL SETUP 
+  // Bluetooth is Serial1 for TX18 RX19)
   Serial1.begin(9600);
 
   //SERVO ATTACH
@@ -119,8 +121,6 @@ void setup()
   leaves2.attach(11);
   leaves3.attach(12);
 
-  // LIGHT CALIBRATION
-  calibrateLight();
 }
 
 void loop()
@@ -131,37 +131,6 @@ void loop()
 
 
 // SOUND SENSING
-/**
-   Initially rotate 360 degrees to calibrate the offsets
-   of the light sensors. Each iteration will update the
-   max and the min values of the light sensors.
-*/
-void calibrateLight() {
-  // Set motor speeds to appropriate values
-  delay(10000);
-  leftMotor->setSpeed(70);
-  rightMotor->setSpeed(70);
-  leftMotor->run(FORWARD);
-  rightMotor->run(BACKWARD);
-
-  // Rotate the robot
-  // TODO: find appropriate stop time
-  long startMillis = millis();
-  while (millis() - startMillis < 360 * 400) {
-    f->updateMinMax();
-    fr->updateMinMax();
-    fl->updateMinMax();
-    b->updateMinMax();
-    br->updateMinMax();
-    bl->updateMinMax();
-  }
-
-  // Re-set motor speeds
-  leftMotor->setSpeed(dspeed);
-  rightMotor->setSpeed(dspeed);
-  leftMotor->run(RELEASE);
-  rightMotor->run(RELEASE);
-}
 
 void senseSound(bool shouldPrint) {
   static unsigned long startMillis;  // Start of sample window
@@ -327,18 +296,18 @@ int sign(float x) {
   return x < 0 ? -1 : 1;
 }
 
-//LIGHT SENSING
+// LIGHT SENSING
 void senseLight(bool shouldPrint) {
-  y = b->val() + 0.5 * (br->val() + bl->val()) - (f->val() + 0.5 * (fr->val() + fl->val()));
-  x = sqrt(3) / 2 * (fl->val() + bl->val() - fr->val() - br->val());
-  // Scale it if needed
-  xmult = x / 1;
-  ymult = y / 1;
-  float vSum = dspeed * sqrt(xmult * xmult + ymult * ymult) * sign(xmult); // vL + vR = magnitude * direction
-  float vDiff = xmult / ymult; // vL - vR = ratio
-  float vL = (vSum + vDiff) / 2;
-  float vR = (vSum - vL);
-  if (abs(vL) > dspeed || abs(vR) > dspeed) {
+  float y = b->val() + 0.5 * (br->val() + bl->val()) - (f->val() + 0.5 * (fr->val() + fl->val()));
+  float x = sqrt(3) / 2 * (fl->val() + bl->val() - fr->val() - br->val());
+  // Scale values if needed
+  float xmult = x / 50;
+  float ymult = y / 50;
+  float vSum = dspeed * ymult; // vR + vL = sumY
+  float vDiff = dspeed * xmult * sign(ymult); // vR - vL = sumX
+  float vR = (vSum + vDiff) / 2;
+  float vL = (vSum - vR);
+  if (abs(vL) > threshold_light || abs(vR) > threshold_light) {
     runCommand(vL, vR);
   } else {
     stopCommand();
@@ -366,34 +335,11 @@ void senseLight(bool shouldPrint) {
 
 // Helper function to set the wheels' speeds
 void runCommand(float vL, float vR) {
-  leftMotor->setSpeed(abs(vL) > 150 ? 150 : abs(vL)); // Conditional tenary operator
-  rightMotor->setSpeed(abs(vR) > 150 ? 150 : abs(vR));
+  leftMotor->setSpeed(abs(vL) > 140 ? 140 : (abs(vL) < dspeed ? dspeed : abs(vL))); // Conditional tenary operator
+  rightMotor->setSpeed(abs(vR) > 140 ? 140 : (abs(vR) < dspeed ? dspeed : abs(vR)));
   leftMotor->run(vL > 0 ? FORWARD : BACKWARD);
   rightMotor->run(vR > 0 ? FORWARD : BACKWARD);
 }
-
-// Helper function to set the wheels' speeds
-void runCommand(int forwardspeed, int turnspeed) {
-  if (x > 0) {
-    // Turn left
-    rightMotor->setSpeed(forwardspeed > 150 ? 150 : forwardspeed);
-    leftMotor->setSpeed(turnspeed > 150 ? 150 : turnspeed);
-  } else {
-    // Turn right
-    rightMotor->setSpeed(turnspeed > 150 ? 150 : turnspeed);
-    leftMotor->setSpeed(turnspeed > 150 ? 150 : turnspeed);
-  }
-  //leftMotor->run(y > 0 ? FORWARD : BACKWARD); // Conditional tenary operator
-  //rightMotor->run(y > 0 ? FORWARD : BACKWARD);
-  if (y < 0) {
-    rightMotor->run(FORWARD);
-    leftMotor->run(FORWARD);
-  } else {
-    rightMotor->run(BACKWARD);
-    leftMotor->run(BACKWARD);
-  }
-}
-
 
 // Helper function to set the wheels' speeds
 void rotateCommand(int degree) {
