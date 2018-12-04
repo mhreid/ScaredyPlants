@@ -4,9 +4,9 @@
   be set to "TRUE" and it will skip the light
   sensing for a little while.
 ****************************************/
-// Mic 1 @ 120 degrees connects to A9 (FRONT)
-// Mic 2 @ 0 degrees connects to A13 (RIGHT)
-// Mic 3 @ 240 degrees connects to A11 (LEFT)
+// Mic 1 @ 120 degrees connects to A3 (BACK)
+// Mic 2 @ 0 degrees connects to A0 (RIGHT)
+// Mic 3 @ 240 degrees connects to A1 (LEFT)
 
 // MOTOR STUFFf
 #include <Wire.h>
@@ -30,8 +30,8 @@ unsigned int sampleLeft;
 unsigned int angle_deg = 0;
 int threshold_sound = 50;
 unsigned long moveMillis = millis(); // Starts counting time for how long an angle has been given
-const int backSound = 2;
-const int rightSound = 8;
+const int backSound = 8;
+const int rightSound = 2;
 const int leftSound = 0;
 
 
@@ -112,7 +112,7 @@ void setup()
   // MOTOR SHIELD SETUP
   AFMS.begin();
 
-  // SERIAL SETUP 
+  // SERIAL SETUP
   // Bluetooth is Serial1 for TX18 RX19)
   Serial1.begin(9600);
 
@@ -125,8 +125,8 @@ void setup()
 
 void loop()
 {
-  //  senseSound(false);
-  senseLight(true);
+  senseSound(true);
+  //  senseLight(false);
 }
 
 
@@ -199,13 +199,13 @@ void senseSound(bool shouldPrint) {
       }
     }
   } else {
-    peakToPeak = abs(signalMax - 32);  // max - min = peak-peak amplitude
+    peakToPeak = abs(signalMax - signalMin);  // max - min = peak-peak amplitude
     double voltsBack = 1000 * (peakToPeak * 5.0) / 1024;  // convert to volts
     // Mic 2
-    peakToPeak2 = abs(signalMax2 - 37);  // max - min = peak-peak amplitude
+    peakToPeak2 = abs(signalMax2 - signalMin2);  // max - min = peak-peak amplitude
     double voltsLeft = 1000 * (peakToPeak2 * 5.0) / 1024;  // convert to volts
     // Mic 3
-    peakToPeak3 = abs(signalMax3 - 48);  // max - min = peak-peak amplitude
+    peakToPeak3 = abs(signalMax3 - signalMin3);  // max - min = peak-peak amplitude
     double voltsRight = 1000 * (peakToPeak3 * 5.0) / 1024;  // convert to volts
 
     if (voltsBack > threshold_sound || voltsLeft > threshold_sound || voltsRight > threshold_sound) {
@@ -237,15 +237,15 @@ void senseSound(bool shouldPrint) {
     };
 
     if (shouldPrint) {
-      Serial.print("Mic Back: "); Serial.print(signalMax - 32); Serial.print("\t");
-      Serial.print("Mic Left: "); Serial.print(signalMax2 - 37); Serial.print("\t");
-      Serial.print("Mic Right: "); Serial.print(signalMax3 - 48); Serial.println("\t");
+      Serial1.print("Mic Back: "); Serial1.print(signalMax - signalMin); Serial1.print("\t");
+      Serial1.print("Mic Left: "); Serial1.print(signalMax2 - signalMin2); Serial1.print("\t");
+      Serial1.print("Mic Right: "); Serial1.print(signalMax3 - signalMin3); Serial1.println("\t");
     }
 
     // TODO: Need to fix this function to "simulate" two behaviors in parallel
     if (angle_deg > 0) {
-      Serial.print("Sound detected: "); Serial.println(angle_deg);
-      //      rotateandrun(dspeed, angle_deg);
+      Serial1.print("Sound detected: "); Serial1.println(angle_deg);
+      rotateandrun(110, angle_deg);
     }
     startMillis = 0; // Flag 0 to reset everything
   }
@@ -254,21 +254,21 @@ void senseSound(bool shouldPrint) {
 void rotateandrun(int motor_speed, int angle) {
   rightMotor->setSpeed(motor_speed);
   leftMotor->setSpeed(motor_speed);
-  //rotateCommand(angle - 180); // delay() goes in here
-  //stopCommand();
-  leftMotor->run(FORWARD);
-  rightMotor->run(FORWARD);
-  int timecheck2 = millis();
-  int counter2 = 1;
-  while (millis() - timecheck2 < 3000) {
-    if (millis() > (3000 / 140)*counter2) {
-      pos -= 1;
-      leaves1.write(pos); //0 means it is all the way up
-      counter2 += 1;
-    }
-  }
+  rotateCommand(angle - 180); // delay() goes in here
+  stopCommand();
+//  leftMotor->run(FORWARD);
+//  rightMotor->run(FORWARD);
+//  int timecheck2 = millis();
+//  int counter2 = 1;
+//  while (millis() - timecheck2 < 3000) {
+//    if (millis() > (3000 / 140)*counter2) {
+//      pos -= 1;
+//      leaves1.write(pos); //0 means it is all the way up
+//      counter2 += 1;
+//    }
+//  }
   //pullLeaves(false);
-  //  stopCommand();
+  stopCommand();
   angle_deg = 0;
 }
 
