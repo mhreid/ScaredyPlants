@@ -1,7 +1,5 @@
 #include <Servo.h>
 
-#include <Servo.h>
-
 Servo myservo;
 const int SERVO_PIN = 9;
 

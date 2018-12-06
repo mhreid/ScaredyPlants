@@ -4,93 +4,17 @@
   be set to "TRUE" and it will skip the light
   sensing for a little while.
 ****************************************/
-// Mic 1 @ 120 degrees connects to A3 (BACK)
-// Mic 2 @ 0 degrees connects to A0 (RIGHT)
-// Mic 3 @ 240 degrees connects to A1 (LEFT)
-
 // MOTOR STUFFf
 #include <Wire.h>
 #include <Adafruit_MotorShield.h>
 #include "utility/Adafruit_MS_PWMServoDriver.h"
-
-
-//includes the motorshield required libraries
 Adafruit_MotorShield AFMS = Adafruit_MotorShield();
-//Creates the motorshield object
 Adafruit_DCMotor *leftMotor = AFMS.getMotor(1);
 Adafruit_DCMotor *rightMotor = AFMS.getMotor(2);
 
+#include "LightSystem.h"
+#include "SoundSystem.h"
 
-//SOUND STUFF
-// Sets up Variables that will be used
-const int sampleWindow = 100; // Sample window width in mS (50 mS = 20Hz)
-unsigned int sampleBack;
-unsigned int sampleRight;
-unsigned int sampleLeft;
-int angle_deg = 0;
-int threshold_sound = 50;
-unsigned long moveMillis = millis(); // Starts counting time for how long an angle has been given
-const int backSound = 9;
-const int rightSound = 7;
-const int leftSound = 8;
-
-
-//LIGHT STUFF
-const int fLight = A15;
-const int frLight = A14;
-const int flLight = A10;
-const int bLight = A12;
-const int brLight = A13;
-const int blLight = A11;
-class LightSensor {
-  public:
-    int min = 1024;
-    int max = 0;
-    int pin;
-    int calValue;
-    LightSensor(int pin) {
-      this->pin = pin;
-      this->calValue = 0;
-    }
-    LightSensor(int pin, int calValue) {
-      this->pin = pin;
-      this->calValue = calValue;
-    }
-    int mean() {
-      return (min + max) / 2;
-    }
-    float val() {
-      return analog() + this->calValue;
-    }
-    int analog() {
-      return analogRead(pin);
-    }
-    int updateMinMax() {
-      int value = analogRead(pin);
-      if (value < this->min) this->min = value;
-      if (value > this->max) this->max = value;
-    }
-};
-
-const int threshold_light = 70;
-LightSensor *f = new LightSensor(fLight); // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 800 in normal light
-LightSensor *fr = new LightSensor(frLight);
-LightSensor *fl = new LightSensor(flLight);
-LightSensor *b = new LightSensor(bLight);
-LightSensor *br = new LightSensor(brLight);
-LightSensor *bl = new LightSensor(blLight);
-//const int fCal = -22 - 17; // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 800 in normal light
-//const int frCal = -56 + 34;
-//const int flCal = 54 - 54;
-//const int bCal = -29 - 14;
-//const int brCal = -92 + 79;
-//const int blCal = 12 - 46;
-//const int fCal = -22; // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 800 in normal light
-//const int frCal = -56;
-//const int flCal = 54;
-//const int bCal = -29;
-//const int brCal = -92;
-//const int blCal = 12;
 const int dspeed = 70; // default speed for wheels
 
 //LEAF SERVO STUFF
@@ -106,13 +30,12 @@ int leavespos1 = pos;
 int leavespos2 = pos;
 int leavespos3 = pos;
 
-void setup()
-{
+void setup() {
   // MOTOR SHIELD SETUP
   AFMS.begin();
 
   // SERIAL SETUP
-  // Bluetooth is Serial1 for TX18 RX19)
+  // Bluetooth is Serial1 for TX18 RX19
   Serial1.begin(9600);
 
   //SERVO ATTACH
@@ -122,8 +45,7 @@ void setup()
 
 }
 
-void loop()
-{
+void loop() {
   senseSound(true);
   senseLight(false);
 }
@@ -132,10 +54,6 @@ void loop()
 // SOUND SENSING
 void senseSound(bool shouldPrint) {
   static unsigned long startMillis;  // Start of sample window
-  int peakToPeak = 0;   // peak-to-peak level
-  int peakToPeak2 = 0; // Mic 2
-  int peakToPeak3 = 0; // Mic 3
-
   static int signalMax; // Mic 1
   static int signalMin;
   static int signalMax2; // Mic 2
@@ -146,12 +64,8 @@ void senseSound(bool shouldPrint) {
 
   if (startMillis == 0) { // Re-initialize everything
     startMillis = millis();
-    signalMax = 0;
-    signalMax2 = 0;
-    signalMax3 = 0;
-    signalMin = 1024;
-    signalMin2 = 1024;
-    signalMin3 = 1024;
+    signalMax = signalMax2 = signalMax3 = 0;
+    signalMin = signalMin2 = signalMin3 = 1024;
     angle_deg = 0;
   }
   // collect data for 50 mS
@@ -197,13 +111,13 @@ void senseSound(bool shouldPrint) {
       }
     }
   } else {
-    peakToPeak = signalMax - signalMin;  // max - min = peak-peak amplitude
+    int peakToPeak = signalMax - signalMin;  // max - min = peak-peak amplitude
     double voltsBack = 1000 * (peakToPeak * 5.0) / 1024;  // convert to volts
     // Mic 2
-    peakToPeak2 = signalMax2 - signalMin2;  // max - min = peak-peak amplitude
+    int peakToPeak2 = signalMax2 - signalMin2;  // max - min = peak-peak amplitude
     double voltsLeft = 1000 * (peakToPeak2 * 5.0) / 1024;  // convert to volts
     // Mic 3
-    peakToPeak3 = signalMax3 - signalMin3;  // max - min = peak-peak amplitude
+    int peakToPeak3 = signalMax3 - signalMin3;  // max - min = peak-peak amplitude
     double voltsRight = 1000 * (peakToPeak3 * 5.0) / 1024;  // convert to volts
 
     if (voltsBack > threshold_sound || voltsLeft > threshold_sound || voltsRight > threshold_sound) {
@@ -260,7 +174,7 @@ void rotateandrun(int motor_speed, int angle) {
   while (millis() - timecheck2 < 3000) {
     if (millis() > (3000 / 140)*counter2) {
       pos -= 1;
-      //        leaves1.write(pos); //0 means it is all the way up
+      leaves1.write(pos); //0 means it is all the way up
       counter2 += 1;
     }
   }
@@ -268,6 +182,20 @@ void rotateandrun(int motor_speed, int angle) {
   angle_deg = 0;
 }
 
+void rotateCommand(int degree) {
+  unsigned long timecheck = millis();
+  int counter1 = 1;
+  rightMotor->run(degree > 0 ? FORWARD : BACKWARD);
+  leftMotor->run(degree > 0 ? BACKWARD : FORWARD);
+  Serial1.print(millis() - timecheck);
+  while (millis() - timecheck < abs(degree) * 1300.0 / 180) { // at speed 110, 1300 ms rotates ~180 degrees
+    if (millis() > abs(degree) * counter1 * 1300.0 / (180 * 140)) {
+      pos += 1;
+      leaves1.write(pos); //0 means it is all the way up
+      counter1 += 1;
+    }
+  }
+}
 
 // LEAF SHRINKING
 // TODO: Get rid of it and integrate the leaf movements into other actions.
@@ -289,7 +217,7 @@ void pullLeaves(bool up) {
 }
 
 int sign(float x) {
-  return x < 0 ? -1 : 1;
+  return x < 0 ? -1 : 1; // Useful function to find sign of x
 }
 
 // LIGHT SENSING
@@ -299,7 +227,7 @@ void senseLight(bool shouldPrint) {
   // Scale values if needed
   float xmult = x / 50;
   float ymult = y / 50;
-  float vSum = dspeed * ymult; // vR + vL = sumY
+  float vSum = dspeed * ymult; // vR + vL = vSum
   float vDiff = dspeed * xmult * sign(ymult); // vR - vL = sumX
   float vR = (vSum + vDiff) / 2;
   float vL = (vSum - vR);
@@ -336,24 +264,6 @@ void runCommand(float vL, float vR) {
   leftMotor->run(vL > 0 ? FORWARD : BACKWARD);
   rightMotor->run(vR > 0 ? FORWARD : BACKWARD);
 }
-
-// Helper function to set the wheels' speeds
-void rotateCommand(int degree) {
-  unsigned long timecheck = millis();
-  int counter1 = 1;
-  rightMotor->run(degree > 0 ? FORWARD : BACKWARD);
-  leftMotor->run(degree > 0 ? BACKWARD : FORWARD);
-  Serial1.print(millis() - timecheck);
-  while (millis() - timecheck < abs(degree) * 1300.0 / 180) {
-    if (millis() > abs(degree)*counter1 * 1300.0 / (180 * 140)) {
-      pos += 1;
-      //      leaves1.write(pos); //0 means it is all the way up
-      counter1 += 1;
-    }
-  }
-  //  delay(abs(degree) * 1300.0 / 180); // 1300 ms rotates ~180 degrees
-}
-
 
 // Helper function to stop both wheels
 void stopCommand() {
