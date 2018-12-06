@@ -27,12 +27,12 @@ const int sampleWindow = 100; // Sample window width in mS (50 mS = 20Hz)
 unsigned int sampleBack;
 unsigned int sampleRight;
 unsigned int sampleLeft;
-unsigned int angle_deg = 0;
+int angle_deg = 0;
 int threshold_sound = 50;
 unsigned long moveMillis = millis(); // Starts counting time for how long an angle has been given
-const int backSound = 8;
-const int rightSound = 2;
-const int leftSound = 0;
+const int backSound = 9;
+const int rightSound = 7;
+const int leftSound = 8;
 
 
 //LIGHT STUFF
@@ -73,7 +73,6 @@ class LightSensor {
 };
 
 const int threshold_light = 70;
-const int dspeed = 70; // default speed for wheels
 LightSensor *f = new LightSensor(fLight); // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 800 in normal light
 LightSensor *fr = new LightSensor(frLight);
 LightSensor *fl = new LightSensor(flLight);
@@ -92,7 +91,7 @@ LightSensor *bl = new LightSensor(blLight);
 //const int bCal = -29;
 //const int brCal = -92;
 //const int blCal = 12;
-
+const int dspeed = 70; // default speed for wheels
 
 //LEAF SERVO STUFF
 #include <Servo.h>
@@ -126,12 +125,11 @@ void setup()
 void loop()
 {
   senseSound(true);
-  //  senseLight(false);
+  senseLight(false);
 }
 
 
 // SOUND SENSING
-
 void senseSound(bool shouldPrint) {
   static unsigned long startMillis;  // Start of sample window
   int peakToPeak = 0;   // peak-to-peak level
@@ -199,13 +197,13 @@ void senseSound(bool shouldPrint) {
       }
     }
   } else {
-    peakToPeak = abs(signalMax - signalMin);  // max - min = peak-peak amplitude
+    peakToPeak = signalMax - signalMin;  // max - min = peak-peak amplitude
     double voltsBack = 1000 * (peakToPeak * 5.0) / 1024;  // convert to volts
     // Mic 2
-    peakToPeak2 = abs(signalMax2 - signalMin2);  // max - min = peak-peak amplitude
+    peakToPeak2 = signalMax2 - signalMin2;  // max - min = peak-peak amplitude
     double voltsLeft = 1000 * (peakToPeak2 * 5.0) / 1024;  // convert to volts
     // Mic 3
-    peakToPeak3 = abs(signalMax3 - signalMin3);  // max - min = peak-peak amplitude
+    peakToPeak3 = signalMax3 - signalMin3;  // max - min = peak-peak amplitude
     double voltsRight = 1000 * (peakToPeak3 * 5.0) / 1024;  // convert to volts
 
     if (voltsBack > threshold_sound || voltsLeft > threshold_sound || voltsRight > threshold_sound) {
@@ -255,19 +253,17 @@ void rotateandrun(int motor_speed, int angle) {
   rightMotor->setSpeed(motor_speed);
   leftMotor->setSpeed(motor_speed);
   rotateCommand(angle - 180); // delay() goes in here
-  stopCommand();
-//  leftMotor->run(FORWARD);
-//  rightMotor->run(FORWARD);
-//  int timecheck2 = millis();
-//  int counter2 = 1;
-//  while (millis() - timecheck2 < 3000) {
-//    if (millis() > (3000 / 140)*counter2) {
-//      pos -= 1;
-//      leaves1.write(pos); //0 means it is all the way up
-//      counter2 += 1;
-//    }
-//  }
-  //pullLeaves(false);
+  leftMotor->run(FORWARD);
+  rightMotor->run(FORWARD);
+  unsigned long timecheck2 = millis();
+  int counter2 = 1;
+  while (millis() - timecheck2 < 3000) {
+    if (millis() > (3000 / 140)*counter2) {
+      pos -= 1;
+      //        leaves1.write(pos); //0 means it is all the way up
+      counter2 += 1;
+    }
+  }
   stopCommand();
   angle_deg = 0;
 }
@@ -343,20 +339,19 @@ void runCommand(float vL, float vR) {
 
 // Helper function to set the wheels' speeds
 void rotateCommand(int degree) {
-  Serial1.println(degree);
-  int timecheck = millis();
+  unsigned long timecheck = millis();
   int counter1 = 1;
-  leftMotor->run(degree > 0 ? FORWARD : BACKWARD);
-  rightMotor->run(degree > 0 ? BACKWARD : FORWARD);
-  while (millis() - timecheck < abs(degree) * 700.0 / 180) {
-    if (millis() > abs(degree)*counter1 * 700.0 / (180 * 140)) {
+  rightMotor->run(degree > 0 ? FORWARD : BACKWARD);
+  leftMotor->run(degree > 0 ? BACKWARD : FORWARD);
+  Serial1.print(millis() - timecheck);
+  while (millis() - timecheck < abs(degree) * 1300.0 / 180) {
+    if (millis() > abs(degree)*counter1 * 1300.0 / (180 * 140)) {
       pos += 1;
-      leaves1.write(pos); //0 means it is all the way up
+      //      leaves1.write(pos); //0 means it is all the way up
       counter1 += 1;
     }
   }
-
-  //delay(abs(degree) * 700.0 / 180); // 700 ms rotates 180 degrees
+  //  delay(abs(degree) * 1300.0 / 180); // 1300 ms rotates ~180 degrees
 }
 
 
