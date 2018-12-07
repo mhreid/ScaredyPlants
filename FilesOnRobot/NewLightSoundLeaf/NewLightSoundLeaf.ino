@@ -20,8 +20,8 @@ const int dspeed = 70; // default speed for wheels
 //LEAF SERVO STUFF
 #include <Servo.h>
 int uppos = 10;
-int downpos = 150;
-int pos = uppos;  // 10 is open leaves, 150 is closed leaves
+int downpos = 160;
+int pos = uppos;  // 10 is open leaves, 160 is closed leaves
 bool pullingLeaves = false;
 Servo leaves1;  // create servo object to control a servo
 Servo leaves2;
@@ -34,20 +34,26 @@ void setup() {
   // SERIAL SETUP
   // Bluetooth is Serial1 for TX18 RX19
   Serial1.begin(9600);
+  Serial.begin(9600);
 
   //SERVO ATTACH
-  leaves1.attach(10);
-  leaves2.attach(11);
-  leaves3.attach(12);
-
+  pinMode(1, OUTPUT);
+  pinMode(2, OUTPUT);
+  pinMode(3, OUTPUT);
+  leaves1.attach(1);
+  leaves2.attach(2);
+  leaves3.attach(3);
+  leaves1.write(uppos);
+  leaves2.write(uppos);
+  leaves3.write(uppos);
+  delay(500);
 }
 
 void loop() {
   senseSound(true);
-  senseLight(false);
+  senseLight3(false);
   pullLeaves();
 }
-
 
 // SOUND SENSING
 void senseSound(bool shouldPrint) {
@@ -59,7 +65,7 @@ void senseSound(bool shouldPrint) {
   static int signalMax3; // Mic 3
   static int signalMin3;
 
-
+  //  Serial1.println(millis() - startMillis);
   // TODO: Need to fix this function to "simulate" two behaviors in parallel
   if (angle_deg > 0) {
     rotateAndRun(110);
@@ -191,25 +197,28 @@ void rotateAndRun(int motor_speed) {
 void pullLeaves() {
   static unsigned long startMillis;
   static int DELAY = 20; // in millis
-  int halfTime = abs(uppos - downpos) * DELAY;
-  
+  int halfTime = abs(downpos - uppos) * DELAY;
+
   if (pullingLeaves) {
+    Serial.print(halfTime);
+    Serial.print("\t");
+    Serial.println(millis() - startMillis);
     if (startMillis == 0) {
       startMillis = millis();
       pos = uppos;
     } else if (millis() - startMillis < halfTime) { // Pull down
-      if (millis() - startMillis < abs(pos - uppos) * DELAY) {
+      if (millis() - startMillis > abs(pos - uppos) * DELAY) {
         pos++;
         rotateServos();
       }
     } else if (millis() - startMillis < 2 * halfTime) { // Pull up
-      if (millis() - startMillis < halfTime + abs(downpos - pos) * DELAY) {
+      if (millis() - startMillis > halfTime + abs(downpos - pos) * DELAY) {
         pos--;
         rotateServos();
       }
     } else { // Finish the action
       startMillis = 0;
-      pullingLeaves = false; 
+      pullingLeaves = false;
     }
   } else {
     startMillis = 0;
@@ -217,6 +226,8 @@ void pullLeaves() {
 }
 
 void rotateServos() {
+  Serial.print("pos: ");
+  Serial.println(pos);
   if (pos >= uppos && pos <= downpos) { // Safe check
     leaves1.write(pos);
     leaves2.write(pos);
@@ -229,7 +240,46 @@ int sign(float x) {
 }
 
 // LIGHT SENSING
-void senseLight(bool shouldPrint) {
+// Code for 3 sensors
+void senseLight3(bool shouldPrint) {
+  if (angle_deg == 0) {
+    float y = b->val() - 0.5 * (fr->val() + fl->val());
+    float x = sqrt(3) / 2 * (fl->val() - fr->val());
+    // Scale values if needed
+    float xmult = x / 50;
+    float ymult = y / 50;
+    float vSum = dspeed * ymult; // vR + vL = vSum
+    float vDiff = dspeed * xmult * sign(ymult); // vR - vL = sumX
+    float vR = (vSum + vDiff) / 2;
+    float vL = (vSum - vR);
+    if (abs(vL) > threshold_light || abs(vR) > threshold_light) {
+      runCommand(vL, vR);
+    } else {
+      stopCommand();
+    }
+    if (shouldPrint) {
+      Serial1.print(vL);
+      Serial1.print("\t");
+      Serial1.println(vR);
+      Serial1.print("f ");
+      Serial1.print(f->val());
+      Serial1.print("\t fl ");
+      Serial1.print(fl->val());
+      Serial1.print("\t fr ");
+      Serial1.println(fr->val());
+
+      Serial1.print("b ");
+      Serial1.print(b->val());
+      Serial1.print("\t bl ");
+      Serial1.print(bl->val());
+      Serial1.print("\t br ");
+      Serial1.println(br->val());
+    }
+  }
+}
+
+// Code for 6 sensors
+void senseLight6(bool shouldPrint) {
   if (angle_deg == 0) {
     float y = b->val() + 0.5 * (br->val() + bl->val()) - (f->val() + 0.5 * (fr->val() + fl->val()));
     float x = sqrt(3) / 2 * (fl->val() + bl->val() - fr->val() - br->val());

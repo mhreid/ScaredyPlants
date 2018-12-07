@@ -8,7 +8,7 @@ unsigned int sampleBack;
 unsigned int sampleRight;
 unsigned int sampleLeft;
 int angle_deg = 0;
-int threshold_sound = 50;
+int threshold_sound = 100;
 unsigned long moveMillis = millis(); // Starts counting time for how long an angle has been given
 const int backSound = A9;
 const int rightSound = A7;
