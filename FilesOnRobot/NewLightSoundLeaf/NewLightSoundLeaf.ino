@@ -22,13 +22,10 @@ const int dspeed = 70; // default speed for wheels
 int uppos = 0;
 int downpos = 140;
 int pos = uppos;  // 0 is open leaves, 140 is closed leaves
-bool up = false;
+bool pullingLeaves = false;
 Servo leaves1;  // create servo object to control a servo
 Servo leaves2;
 Servo leaves3;
-int leavespos1 = pos;
-int leavespos2 = pos;
-int leavespos3 = pos;
 
 void setup() {
   // MOTOR SHIELD SETUP
@@ -48,6 +45,7 @@ void setup() {
 void loop() {
   senseSound(true);
   senseLight(false);
+  pullLeaves();
 }
 
 
@@ -61,6 +59,15 @@ void senseSound(bool shouldPrint) {
   static int signalMax3; // Mic 3
   static int signalMin3;
 
+
+  // TODO: Need to fix this function to "simulate" two behaviors in parallel
+  if (angle_deg > 0) {
+    rotateAndRun(110);
+    if (angle_deg == 0) {
+      startMillis = 0; // Flag 0 to reset everything
+    }
+    return;
+  }
 
   if (startMillis == 0) { // Re-initialize everything
     startMillis = millis();
@@ -119,7 +126,14 @@ void senseSound(bool shouldPrint) {
     // Mic 3
     int peakToPeak3 = signalMax3 - signalMin3;  // max - min = peak-peak amplitude
     double voltsRight = 1000 * (peakToPeak3 * 5.0) / 1024;  // convert to volts
-
+    if (shouldPrint) {
+      Serial1.print("Mic Back: "); Serial1.print(signalMax - signalMin); Serial1.print("\t");
+      Serial1.print("Mic Left: "); Serial1.print(signalMax2 - signalMin2); Serial1.print("\t");
+      Serial1.print("Mic Right: "); Serial1.print(signalMax3 - signalMin3); Serial1.println("\t");
+      if (angle_deg > 0) {
+        Serial1.print("Sound detected: "); Serial1.println(angle_deg);
+      }
+    }
     if (voltsBack > threshold_sound || voltsLeft > threshold_sound || voltsRight > threshold_sound) {
       if (voltsBack > voltsLeft) {
         if (voltsRight > voltsLeft) {
@@ -146,73 +160,47 @@ void senseSound(bool shouldPrint) {
           angle_deg = 30; // R > L > B
         }
       }
-    };
-
-    if (shouldPrint) {
-      Serial1.print("Mic Back: "); Serial1.print(signalMax - signalMin); Serial1.print("\t");
-      Serial1.print("Mic Left: "); Serial1.print(signalMax2 - signalMin2); Serial1.print("\t");
-      Serial1.print("Mic Right: "); Serial1.print(signalMax3 - signalMin3); Serial1.println("\t");
+    } else {
+      startMillis = 0; // Flag 0 to reset everything
     }
-
-    // TODO: Need to fix this function to "simulate" two behaviors in parallel
-    if (angle_deg > 0) {
-      Serial1.print("Sound detected: "); Serial1.println(angle_deg);
-      rotateandrun(110, angle_deg);
-    }
-    startMillis = 0; // Flag 0 to reset everything
   }
 }
 
-void rotateandrun(int motor_speed, int angle) {
-  rightMotor->setSpeed(motor_speed);
-  leftMotor->setSpeed(motor_speed);
-  rotateCommand(angle - 180); // delay() goes in here
-  leftMotor->run(FORWARD);
-  rightMotor->run(FORWARD);
-  unsigned long timecheck2 = millis();
-  int counter2 = 1;
-  while (millis() - timecheck2 < 3000) {
-    if (millis() > (3000 / 140)*counter2) {
-      pos -= 1;
-      leaves1.write(pos); //0 means it is all the way up
-      counter2 += 1;
-    }
-  }
-  stopCommand();
-  angle_deg = 0;
-}
-
-void rotateCommand(int degree) {
-  unsigned long timecheck = millis();
-  int counter1 = 1;
-  rightMotor->run(degree > 0 ? FORWARD : BACKWARD);
-  leftMotor->run(degree > 0 ? BACKWARD : FORWARD);
-  Serial1.print(millis() - timecheck);
-  while (millis() - timecheck < abs(degree) * 1300.0 / 180) { // at speed 110, 1300 ms rotates ~180 degrees
-    if (millis() > abs(degree) * counter1 * 1300.0 / (180 * 140)) {
-      pos += 1;
-      leaves1.write(pos); //0 means it is all the way up
-      counter1 += 1;
-    }
+void rotateAndRun(int motor_speed) {
+  static unsigned long startMillis;
+  int degree = angle_deg - 180;
+  if (startMillis == 0) { // At start
+    startMillis = millis();
+    rightMotor->setSpeed(motor_speed);
+    leftMotor->setSpeed(motor_speed);
+  } else if (millis() - startMillis < abs(degree) * 1300.0 / 180) { // Rotate: at speed 110, 1300 ms rotates ~180 degrees
+    rightMotor->run(degree > 0 ? FORWARD : BACKWARD);
+    leftMotor->run(degree > 0 ? BACKWARD : FORWARD);
+  } else if (millis() - startMillis < abs(degree) * 1300.0 / 180 + 3000) { // Move forward
+    leftMotor->run(FORWARD);
+    rightMotor->run(FORWARD);
+  } else { // Stop
+    stopCommand();
+    angle_deg = 0;
+    startMillis = 0;
   }
 }
 
 // LEAF SHRINKING
 // TODO: Get rid of it and integrate the leaf movements into other actions.
-void pullLeaves(bool up) {
-  if (pos <= downpos && up == false) {
-    pos += 1;
-    leaves1.write(pos);
-    leaves2.write(pos);
-    leaves3.write(pos);   // tell servo to go to position in variable 'pos'
-    delay(3);
-  }
-  if (pos >= uppos && up == true ) {
-    pos -= 1;
-    leaves1.write(pos);
-    leaves2.write(pos);
-    leaves3.write(pos); // tell servo to go to position in variable 'pos'
-    delay(3);
+void pullLeaves() {
+  static unsigned long startMillis;
+  if (pullingLeaves) {
+    pullingLeaves = false;
+    if (startMillis == 0) {
+      startMillis = millis();
+    } else if (millis() - startMillis < 4000) {
+      
+    } else {
+      startMillis = 0;
+    }
+  } else {
+    startMillis = 0;
   }
 }
 
@@ -222,38 +210,39 @@ int sign(float x) {
 
 // LIGHT SENSING
 void senseLight(bool shouldPrint) {
-  float y = b->val() + 0.5 * (br->val() + bl->val()) - (f->val() + 0.5 * (fr->val() + fl->val()));
-  float x = sqrt(3) / 2 * (fl->val() + bl->val() - fr->val() - br->val());
-  // Scale values if needed
-  float xmult = x / 50;
-  float ymult = y / 50;
-  float vSum = dspeed * ymult; // vR + vL = vSum
-  float vDiff = dspeed * xmult * sign(ymult); // vR - vL = sumX
-  float vR = (vSum + vDiff) / 2;
-  float vL = (vSum - vR);
-  if (abs(vL) > threshold_light || abs(vR) > threshold_light) {
-    runCommand(vL, vR);
-  } else {
-    stopCommand();
-  }
+  if (angle_deg == 0) {
+    float y = b->val() + 0.5 * (br->val() + bl->val()) - (f->val() + 0.5 * (fr->val() + fl->val()));
+    float x = sqrt(3) / 2 * (fl->val() + bl->val() - fr->val() - br->val());
+    // Scale values if needed
+    float xmult = x / 50;
+    float ymult = y / 50;
+    float vSum = dspeed * ymult; // vR + vL = vSum
+    float vDiff = dspeed * xmult * sign(ymult); // vR - vL = sumX
+    float vR = (vSum + vDiff) / 2;
+    float vL = (vSum - vR);
+    if (abs(vL) > threshold_light || abs(vR) > threshold_light) {
+      runCommand(vL, vR);
+    } else {
+      stopCommand();
+    }
+    if (shouldPrint) {
+      Serial1.print(vL);
+      Serial1.print("\t");
+      Serial1.println(vR);
+      Serial1.print("f ");
+      Serial1.print(f->val());
+      Serial1.print("\t fl ");
+      Serial1.print(fl->val());
+      Serial1.print("\t fr ");
+      Serial1.println(fr->val());
 
-  if (shouldPrint) {
-    Serial1.print(vL);
-    Serial1.print("\t");
-    Serial1.println(vR);
-    Serial1.print("f ");
-    Serial1.print(f->val());
-    Serial1.print("\t fl ");
-    Serial1.print(fl->val());
-    Serial1.print("\t fr ");
-    Serial1.println(fr->val());
-
-    Serial1.print("b ");
-    Serial1.print(b->val());
-    Serial1.print("\t bl ");
-    Serial1.print(bl->val());
-    Serial1.print("\t br ");
-    Serial1.println(br->val());
+      Serial1.print("b ");
+      Serial1.print(b->val());
+      Serial1.print("\t bl ");
+      Serial1.print(bl->val());
+      Serial1.print("\t br ");
+      Serial1.println(br->val());
+    }
   }
 }
 
