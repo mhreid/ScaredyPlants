@@ -19,9 +19,9 @@ const int dspeed = 70; // default speed for wheels
 
 //LEAF SERVO STUFF
 #include <Servo.h>
-int uppos = 0;
-int downpos = 140;
-int pos = uppos;  // 0 is open leaves, 140 is closed leaves
+int uppos = 10;
+int downpos = 150;
+int pos = uppos;  // 10 is open leaves, 150 is closed leaves
 bool pullingLeaves = false;
 Servo leaves1;  // create servo object to control a servo
 Servo leaves2;
@@ -160,6 +160,7 @@ void senseSound(bool shouldPrint) {
           angle_deg = 30; // R > L > B
         }
       }
+      pullingLeaves = true; // Trigger the servos to pull leaves
     } else {
       startMillis = 0; // Flag 0 to reset everything
     }
@@ -187,20 +188,39 @@ void rotateAndRun(int motor_speed) {
 }
 
 // LEAF SHRINKING
-// TODO: Get rid of it and integrate the leaf movements into other actions.
 void pullLeaves() {
   static unsigned long startMillis;
+  static int DELAY = 20; // in millis
+  int halfTime = abs(uppos - downpos) * DELAY;
+  
   if (pullingLeaves) {
-    pullingLeaves = false;
     if (startMillis == 0) {
       startMillis = millis();
-    } else if (millis() - startMillis < 4000) {
-      
-    } else {
+      pos = uppos;
+    } else if (millis() - startMillis < halfTime) { // Pull down
+      if (millis() - startMillis < abs(pos - uppos) * DELAY) {
+        pos++;
+        rotateServos();
+      }
+    } else if (millis() - startMillis < 2 * halfTime) { // Pull up
+      if (millis() - startMillis < halfTime + abs(downpos - pos) * DELAY) {
+        pos--;
+        rotateServos();
+      }
+    } else { // Finish the action
       startMillis = 0;
+      pullingLeaves = false; 
     }
   } else {
     startMillis = 0;
+  }
+}
+
+void rotateServos() {
+  if (pos >= uppos && pos <= downpos) { // Safe check
+    leaves1.write(pos);
+    leaves2.write(pos);
+    leaves3.write(pos);
   }
 }
 
