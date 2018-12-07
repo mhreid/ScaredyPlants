@@ -90,38 +90,20 @@ void senseSound(bool shouldPrint) {
     // Mic 1
     if (sampleBack < 1024)  // toss out spurious readings
     {
-      if (sampleBack > signalMax)
-      {
-        signalMax = sampleBack;  // save just the max levels
-      }
-      else if (sampleBack < signalMin)
-      {
-        signalMin = sampleBack;  // save just the min levels
-      }
+      signalMax = sampleBack < signalMax ? signalMax : sampleBack;
+      signalMin = sampleBack > signalMin ? signalMin : sampleBack;
     }
     // Mic 2
     if (sampleLeft < 1024)  // toss out spurious readings
     {
-      if (sampleLeft > signalMax2)
-      {
-        signalMax2 = sampleLeft;  // save just the max levels
-      }
-      else if (sampleLeft < signalMin2)
-      {
-        signalMin2 = sampleLeft;  // save just the min levels
-      }
+      signalMax2 = sampleLeft < signalMax2 ? signalMax2 : sampleLeft;
+      signalMin2 = sampleLeft > signalMin2 ? signalMin2 : sampleLeft;
     }
     // Mic 3
     if (sampleRight < 1024)  // toss out spurious readings
     {
-      if (sampleRight > signalMax3)
-      {
-        signalMax3 = sampleRight;  // save just the max levels
-      }
-      else if (sampleRight < signalMin3)
-      {
-        signalMin3 = sampleRight;  // save just the min levels
-      }
+      signalMax3 = sampleRight < signalMax3 ? signalMax3 : sampleRight;
+      signalMin3 = sampleRight > signalMin3 ? signalMin3 : sampleRight;
     }
   } else {
     int peakToPeak = signalMax - signalMin;  // max - min = peak-peak amplitude
