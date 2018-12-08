@@ -26,6 +26,7 @@ bool pullingLeaves = false;
 Servo leaves1;  // create servo object to control a servo
 Servo leaves2;
 Servo leaves3;
+Servo leaves4;
 
 void setup() {
   // MOTOR SHIELD SETUP
@@ -37,21 +38,24 @@ void setup() {
   Serial.begin(9600);
 
   //SERVO ATTACH
-  pinMode(1, OUTPUT);
   pinMode(2, OUTPUT);
   pinMode(3, OUTPUT);
-  leaves1.attach(1);
-  leaves2.attach(2);
-  leaves3.attach(3);
+  pinMode(4, OUTPUT);
+  pinMode(5, OUTPUT);
+  leaves1.attach(2);
+  leaves2.attach(3);
+  leaves3.attach(4);
+  leaves4.attach(5);
   leaves1.write(uppos);
   leaves2.write(uppos);
   leaves3.write(uppos);
+  leaves4.write(uppos);
   delay(500);
 }
 
 void loop() {
   senseSound(true);
-  senseLight3(false);
+  //    senseLight3(false);
   pullLeaves();
 }
 
@@ -114,14 +118,6 @@ void senseSound(bool shouldPrint) {
     // Mic 3
     int peakToPeak3 = signalMax3 - signalMin3;  // max - min = peak-peak amplitude
     double voltsRight = 1000 * (peakToPeak3 * 5.0) / 1024;  // convert to volts
-    if (shouldPrint) {
-      Serial1.print("Mic Back: "); Serial1.print(signalMax - signalMin); Serial1.print("\t");
-      Serial1.print("Mic Left: "); Serial1.print(signalMax2 - signalMin2); Serial1.print("\t");
-      Serial1.print("Mic Right: "); Serial1.print(signalMax3 - signalMin3); Serial1.println("\t");
-      if (angle_deg > 0) {
-        Serial1.print("Sound detected: "); Serial1.println(angle_deg);
-      }
-    }
     if (voltsBack > threshold_sound || voltsLeft > threshold_sound || voltsRight > threshold_sound) {
       if (voltsBack > voltsLeft) {
         if (voltsRight > voltsLeft) {
@@ -129,11 +125,11 @@ void senseSound(bool shouldPrint) {
             angle_deg = 90; // R > B > L
           }
           else {
-            angle_deg = 150; // B > R > L
+            angle_deg = 30; // B > R > L
           }
         }
         else {
-          angle_deg = 210; // B > L > R
+          angle_deg = 330; // B > L > R
         }
       }
       else {
@@ -142,15 +138,23 @@ void senseSound(bool shouldPrint) {
             angle_deg = 270; // L > B > R
           }
           else {
-            angle_deg = 330; // L > R > B
+            angle_deg = 210; // L > R > B
           }
         } else {
-          angle_deg = 30; // R > L > B
+          angle_deg = 150; // R > L > B
         }
       }
       pullingLeaves = true; // Trigger the servos to pull leaves
     } else {
       startMillis = 0; // Flag 0 to reset everything
+    }
+    if (shouldPrint) {
+      Serial1.print("Mic Back: "); Serial1.print(signalMax - signalMin); Serial1.print("\t");
+      Serial1.print("Mic Left: "); Serial1.print(signalMax2 - signalMin2); Serial1.print("\t");
+      Serial1.print("Mic Right: "); Serial1.print(signalMax3 - signalMin3); Serial1.println("\t");
+      if (angle_deg > 0) {
+        Serial1.print("Sound detected: "); Serial1.println(angle_deg);
+      }
     }
   }
 }
@@ -163,11 +167,11 @@ void rotateAndRun(int motor_speed) {
     rightMotor->setSpeed(motor_speed);
     leftMotor->setSpeed(motor_speed);
   } else if (millis() - startMillis < abs(degree) * 1300.0 / 180) { // Rotate: at speed 110, 1300 ms rotates ~180 degrees
-    rightMotor->run(degree > 0 ? FORWARD : BACKWARD);
-    leftMotor->run(degree > 0 ? BACKWARD : FORWARD);
+    leftMotor->run(degree > 0 ? FORWARD : BACKWARD);
+    rightMotor->run(degree > 0 ? BACKWARD : FORWARD);
   } else if (millis() - startMillis < abs(degree) * 1300.0 / 180 + 3000) { // Move forward
-    leftMotor->run(FORWARD);
-    rightMotor->run(FORWARD);
+    leftMotor->run(BACKWARD);
+    rightMotor->run(BACKWARD);
   } else { // Stop
     stopCommand();
     angle_deg = 0;
@@ -214,6 +218,7 @@ void rotateServos() {
     leaves1.write(pos);
     leaves2.write(pos);
     leaves3.write(pos);
+    leaves4.write(pos);
   }
 }
 
