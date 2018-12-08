@@ -88,14 +88,14 @@ void senseSound(bool shouldPrint) {
   // collect data for 50 mS
   if (millis() - startMillis < sampleWindow)
   {
-    sampleBack = analogRead(backSound);
+    sampleFront = analogRead(frontSound);
     sampleLeft = analogRead(leftSound);
     sampleRight = analogRead(rightSound);
     // Mic 1
-    if (sampleBack < 1024)  // toss out spurious readings
+    if (sampleFront < 1024)  // toss out spurious readings
     {
-      signalMax = sampleBack < signalMax ? signalMax : sampleBack;
-      signalMin = sampleBack > signalMin ? signalMin : sampleBack;
+      signalMax = sampleFront < signalMax ? signalMax : sampleFront;
+      signalMin = sampleFront > signalMin ? signalMin : sampleFront;
     }
     // Mic 2
     if (sampleLeft < 1024)  // toss out spurious readings
@@ -111,17 +111,17 @@ void senseSound(bool shouldPrint) {
     }
   } else {
     int peakToPeak = signalMax - signalMin;  // max - min = peak-peak amplitude
-    double voltsBack = 1000 * (peakToPeak * 5.0) / 1024;  // convert to volts
+    double voltsFront = 1000 * (peakToPeak * 5.0) / 1024;  // convert to volts
     // Mic 2
     int peakToPeak2 = signalMax2 - signalMin2;  // max - min = peak-peak amplitude
     double voltsLeft = 1000 * (peakToPeak2 * 5.0) / 1024;  // convert to volts
     // Mic 3
     int peakToPeak3 = signalMax3 - signalMin3;  // max - min = peak-peak amplitude
     double voltsRight = 1000 * (peakToPeak3 * 5.0) / 1024;  // convert to volts
-    if (voltsBack > threshold_sound || voltsLeft > threshold_sound || voltsRight > threshold_sound) {
-      if (voltsBack > voltsLeft) {
+    if (voltsFront > threshold_sound || voltsLeft > threshold_sound || voltsRight > threshold_sound) {
+      if (voltsFront > voltsLeft) {
         if (voltsRight > voltsLeft) {
-          if (voltsRight > voltsBack) {
+          if (voltsRight > voltsFront) {
             angle_deg = 90; // R > B > L
           }
           else {
@@ -134,7 +134,7 @@ void senseSound(bool shouldPrint) {
       }
       else {
         if (voltsLeft > voltsRight) {
-          if (voltsBack > voltsRight) {
+          if (voltsFront > voltsRight) {
             angle_deg = 270; // L > B > R
           }
           else {
@@ -149,7 +149,7 @@ void senseSound(bool shouldPrint) {
       startMillis = 0; // Flag 0 to reset everything
     }
     if (shouldPrint) {
-      Serial1.print("Mic Back: "); Serial1.print(signalMax - signalMin); Serial1.print("\t");
+      Serial1.print("Mic Front: "); Serial1.print(signalMax - signalMin); Serial1.print("\t");
       Serial1.print("Mic Left: "); Serial1.print(signalMax2 - signalMin2); Serial1.print("\t");
       Serial1.print("Mic Right: "); Serial1.print(signalMax3 - signalMin3); Serial1.println("\t");
       if (angle_deg > 0) {
