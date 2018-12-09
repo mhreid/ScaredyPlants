@@ -54,8 +54,8 @@ void setup() {
 }
 
 void loop() {
-  senseSound(true);
-  //    senseLight3(false);
+  senseSound(false);
+  senseLight3(false);
   pullLeaves();
 }
 
@@ -233,8 +233,8 @@ void senseLight3(bool shouldPrint) {
     float y = b->val() - 0.5 * (fr->val() + fl->val());
     float x = sqrt(3) / 2 * (fl->val() - fr->val());
     // Scale values if needed
-    float xmult = x / 50;
-    float ymult = y / 50;
+    float xmult = x / 30;
+    float ymult = y / 30;
     float vSum = dspeed * ymult; // vR + vL = vSum
     float vDiff = dspeed * xmult * sign(ymult); // vR - vL = sumX
     float vR = (vSum + vDiff) / 2;
@@ -245,22 +245,15 @@ void senseLight3(bool shouldPrint) {
       stopCommand();
     }
     if (shouldPrint) {
-      Serial1.print(vL);
-      Serial1.print("\t");
-      Serial1.println(vR);
-      Serial1.print("f ");
-      Serial1.print(f->val());
-      Serial1.print("\t fl ");
-      Serial1.print(fl->val());
-      Serial1.print("\t fr ");
-      Serial1.println(fr->val());
-
-      Serial1.print("b ");
-      Serial1.print(b->val());
-      Serial1.print("\t bl ");
-      Serial1.print(bl->val());
-      Serial1.print("\t br ");
-      Serial1.println(br->val());
+      Serial.print(vL);
+      Serial.print("\t");
+      Serial.println(vR);
+      Serial.print("fl ");
+      Serial.print(fl->val());
+      Serial.print("\t fr ");
+      Serial.print(fr->val());
+      Serial.print("\t b ");
+      Serial.println(b->val());
     }
   }
 }

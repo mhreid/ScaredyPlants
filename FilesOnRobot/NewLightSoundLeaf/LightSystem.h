@@ -1,9 +1,15 @@
 // LIGHT STUFF
 // Sets up variables that will be used
+//const int fLight = A15;
+//const int frLight = A14;
+//const int flLight = A10;
+//const int bLight = A12;
+//const int brLight = A13;
+//const int blLight = A11;
 const int fLight = A15;
-const int frLight = A14;
-const int flLight = A10;
-const int bLight = A12;
+const int frLight = A11;
+const int flLight = A15;
+const int bLight = A13;
 const int brLight = A13;
 const int blLight = A11;
 const int threshold_light = 70;
