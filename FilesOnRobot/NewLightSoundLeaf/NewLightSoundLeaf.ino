@@ -4,29 +4,10 @@
   be set to "TRUE" and it will skip the light
   sensing for a little while.
 ****************************************/
-// MOTOR STUFFf
-#include <Wire.h>
-#include <Adafruit_MotorShield.h>
-#include "utility/Adafruit_MS_PWMServoDriver.h"
-Adafruit_MotorShield AFMS = Adafruit_MotorShield();
-Adafruit_DCMotor *leftMotor = AFMS.getMotor(1);
-Adafruit_DCMotor *rightMotor = AFMS.getMotor(2);
-
+#include "MotorSystem.h"
 #include "LightSystem.h"
 #include "SoundSystem.h"
-
-const int dspeed = 70; // default speed for wheels
-
-//LEAF SERVO STUFF
-#include <Servo.h>
-int uppos = 10;
-int downpos = 160;
-int pos = uppos;  // 10 is open leaves, 160 is closed leaves
-bool pullingLeaves = false;
-Servo leaves1;  // create servo object to control a servo
-Servo leaves2;
-Servo leaves3;
-Servo leaves4;
+#include "LeafServo.h"
 
 void setup() {
   // MOTOR SHIELD SETUP
@@ -54,7 +35,7 @@ void setup() {
 }
 
 void loop() {
-  senseSound(false);
+  senseSound(false); // Set true to print out sensors' values
   senseLight3(false);
   pullLeaves();
 }

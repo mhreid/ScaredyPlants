@@ -43,9 +43,9 @@ class LightSensor {
     }
 };
 LightSensor *f = new LightSensor(fLight); // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 800 in normal light
-LightSensor *fr = new LightSensor(frLight);
-LightSensor *fl = new LightSensor(flLight);
-LightSensor *b = new LightSensor(bLight);
+LightSensor *fr = new LightSensor(frLight, -12);
+LightSensor *fl = new LightSensor(flLight, 36);
+LightSensor *b = new LightSensor(bLight, 22);
 LightSensor *br = new LightSensor(brLight);
 LightSensor *bl = new LightSensor(blLight);
 //const int fCal = -22 - 17; // Need to calibrate xcal and ycal under the normal lighting condition, make it so all == 800 in normal light
