@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="65643149-0174-4694-94dc-0a866ee576f6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/.idea/ScaredyPlantsWeb.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/apps/audioPlayer2.swf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/electrical.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/main_style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/custom.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/17c55b27-e9ab-43cd-b948-d49f97480d68.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/18839597-afa8-4f0b-9abb-4a30262d0da8.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/1a7c9181-cd24-4943-a9d9-d033189524e0.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/1c6c1881-23c9-4d6a-a018-759d1c9ded15.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/1de7e6f4-9d4d-47e7-ab23-7d5cf10ab585.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/1e9892c0-6927-4412-9874-1b82801ba47a.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/2cd55546-ec00-4af9-aeca-4a3cd186da53.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/2e3f5cb9-101f-46cf-a7b3-dfaa58261e03.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/3966f856-9dcf-48e7-88e7-7400f1b7d619.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/3a561c83-40d4-4868-8255-e8455eb009c4.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/3f380a53-50ea-4a62-95c5-d5d8dba03ab8.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/46cf1067-688d-4aab-b0f7-bd942af6efd8.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/52a192b1-bea5-4b48-879f-107f009b666f.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/627fbb5a-3bae-4cd9-b617-2f923e29d55e.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/63a74598-733c-4d0c-bd91-b01bffcd6e69.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/6de0ce4d-9278-467b-b96f-c1f5f0a4c375.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/7377dbe6-f11a-4a05-b33c-bc8ce1f60f84.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/77a9cdce-ea6a-4f94-95df-e6a54555545e.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/8344e877-560d-44d4-82eb-9822766676f9.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/8b498c39-fabe-4789-bb81-5e37c9ecddd3.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/92b66dbd-4201-4ac2-a605-4d4ffc8705cc.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/9fd4ea0c-b19a-4b21-9fdf-37045707dd78.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/a89d6ad1-a04f-4a8f-b140-e55478dbea80.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/b28b01d9-78c5-46c6-a30d-9a62c8f407c5.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/custom.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/d1fddef1-d940-4904-8f6c-17e809462301.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/e9167238-3b3f-4813-a04a-a384394eed42.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/ed4d3c45-af64-4992-974b-c37cd12a9570.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/f0d655c5-a88a-49ad-bb29-f3b5cca41731.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/f26faddb-86cc-4477-a253-1e1287684336.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/fonts/fa19948e-5e38-4909-b31e-41acd170d6f2.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/images/default-bg.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/images/select-dropdown.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/files/theme/plugins.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/firmware.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/mechanical.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/process.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/sprint-i.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/sprint-ii.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/sprint-iii.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/sprint-iv.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/system.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/103579499.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/103579499_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/1526920925.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/1953449507.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/257642209.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/3765c625_1_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/3765c625_2_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/377112350.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/48362651-727690737623950-4871662811215822848-n_1_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/48362651-727690737623950-4871662811215822848-n_2_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/48362651-727690737623950-4871662811215822848-n_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/673657228.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/673657228_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/722879557.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/828881397.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/839645746.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/839645746_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/Coffee.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/Graph.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/Hadleigh.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/Khang.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/Luis.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/Micah.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/circuit-sprint-2_1_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/circuit-sprint-2_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/circuit-sprint-2_2_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/circuit-sprint-2_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/code_1_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/code_2_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/code_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/divider-graphic_1_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/divider-graphic_2_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/divider-graphic_3_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/divider-graphic_4_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/divider-graphic_5_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/divider-graphic_6_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/edited/img-3023_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/edited/img-3023_2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/edited/lightfollow-sprint3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/103579499.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/code.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/code_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/full-cad-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/full-cad-1_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/img-3014_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/img-3016_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/img-3027_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/img-3029_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/img-3034.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/leafprototypes.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/leafprototypes_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/leafprototypes_2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/lightfollowingdiagram.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/lightfollowingdiagram_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/living-spine.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/living-spine_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/photo-1446038173735-acad037199d2_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/photo-1462842846914-31ab9f19373a_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/scaredyplants.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/software-system.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/soundsense-sprint2_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/soundsense.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/sprint-i-robot.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/editor/stem-sketch.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/flowerpotbase.sldprt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/full-cad-1_2_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/full-cad-1_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3006.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3006_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3009.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3009_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3010.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3010_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3010_1_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3010_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3011.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3011_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3013.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3013_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3014.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3014_1_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3014_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3016.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3016_1_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3016_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3018.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3018_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3019.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3019_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3023.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3023_1_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3023_2_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3023_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3024.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3024_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3025.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3025_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3026.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3026_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3027.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3027_1_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3027_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3028.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3028_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3029.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3029_1_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3029_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3030.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3030_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/img-3034_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/leaf-knot.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/leaf-knot_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/leafmountplate.sldprt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/leafprototypes_1_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/leafprototypes_2_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/leafprototypes_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/leavemounttube.sldprt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/lightfollow-sprint3_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/lightfollowingdiagram_1_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/lightfollowingdiagram_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/lightfollowingdiagram_2_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/living-spine_1_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/living-spine_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/mobile-resize_orig.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/photo-1446038173735-acad037199d2_1_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/photo-1446575983799-470c50cfdd25_1_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/photo-1446575983799-470c50cfdd25_2_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/photo-1462842846914-31ab9f19373a_1_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/photo-1468324231521-5bb8d15ff471_1_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/photo-1471622710663-8f18c20d6ee3_1_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/photo-1471622710663-8f18c20d6ee3_2_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/photo-1474312650852-739d4703e766-cropped_1_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/pot-resize_1_orig.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/profile_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/profile_1_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/published/full-cad-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/published/img-3014_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/published/img-3016_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/published/img-3023_2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/published/img-3027_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/published/img-3034.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/published/leafprototypes_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/published/lightfollow-sprint3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/published/living-spine_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/published/photo-1471800400498-ffe300020c47_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/published/software-system.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/published/soundsense-sprint2_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/published/stem-sketch.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/scaredyplants_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/servohorn.sldprt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/software-system_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/soundsense-sprint2_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/soundsense-sprint2_1_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/soundsense-sprint2_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/soundsense_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/soundsense_1_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/soundsense_orig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/sprint-i-robot_orig.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/stembottom.sldprt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ScaredyPlantsWeb/uploads/1/2/2/5/122541866/stemtop.sldprt" beforeDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sprint-iv.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="362">
+              <caret line="558" column="45" lean-forward="true" selection-start-line="558" selection-start-column="45" selection-end-line="558" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/electrical.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="96">
+              <caret line="556" column="32" selection-start-line="556" selection-start-column="32" selection-end-line="556" selection-end-column="32" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="e#477#481#1" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/mechanical.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="143">
+              <caret line="578" column="21" lean-forward="true" selection-start-line="578" selection-start-column="21" selection-end-line="578" selection-end-column="21" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="e#477#481#1" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#5;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#hr#0;n#div#5;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#5;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#32500#32506#0" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#7;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#7;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#8;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#hr#0;n#div#8;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#8;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#37917#37923#0" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#10;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sprint-i.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="14525">
+              <caret line="581" column="62" selection-start-line="581" selection-start-column="62" selection-end-line="581" selection-end-column="62" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#div#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#26498#26504#0" expanded="true" />
+                <element signature="e#26809#26815#0" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>backgr</find>
+      <find>coffee</find>
+      <find>youtub</find>
+      <find>footer-wr</find>
+      <find>footer</find>
+      <find>background</find>
+      <find>image</find>
+      <find>customer</find>
+      <find>googleap</find>
+      <find>wsite-mu</find>
+      <find>backgroun</find>
+      <find>drive</find>
+      <find>backgrou</find>
+      <find>ScaredyPlantsWeb</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>The_Scaredy_Plants</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/firmware.html" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/process.html" />
+        <option value="$PROJECT_DIR$/system.html" />
+        <option value="$PROJECT_DIR$/sprint-ii.html" />
+        <option value="$PROJECT_DIR$/sprint-i.html" />
+        <option value="$PROJECT_DIR$/sprint-iii.html" />
+        <option value="$PROJECT_DIR$/sprint-iv.html" />
+        <option value="$PROJECT_DIR$/electrical.html" />
+        <option value="$PROJECT_DIR$/mechanical.html" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-13" />
+    <option name="y" value="-9" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="The_Scaredy_Plants" type="b2602c69:ProjectViewProjectNode" />
+              <item name="The_Scaredy_Plants" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="JavaScript Debug.electrical.html">
+    <configuration name="electrical.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/The_Scaredy_Plants/electrical.html">
+      <method v="2" />
+    </configuration>
+    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/ScaredyPlantsWeb/index.html">
+      <method v="2" />
+    </configuration>
+    <configuration name="sprint-i.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/ScaredyPlantsWeb/sprint-i.html">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.electrical.html" />
+        <item itemvalue="JavaScript Debug.sprint-i.html" />
+        <item itemvalue="JavaScript Debug.index.html" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="65643149-0174-4694-94dc-0a866ee576f6" name="Default Changelist" comment="" />
+      <created>1544676279181</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1544676279181</updated>
+      <workItem from="1544676281912" duration="4145000" />
+      <workItem from="1544680647545" duration="178000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="4323000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.10906217" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.1419285" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/uploads/1/2/2/5/122541866/Luis.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="856" lean-forward="true" selection-start-line="856" selection-end-line="856" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#477#481#1" expanded="true" />
+            <element signature="n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#div#1;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#div#2;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#font#0;n#h2#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#2;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#3;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/firmware.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="682" lean-forward="true" selection-start-line="682" selection-end-line="682" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#477#481#1" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/process.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="505">
+          <caret line="1098" lean-forward="true" selection-start-line="1098" selection-end-line="1098" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#477#481#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="1218" column="25" lean-forward="true" selection-start-line="1218" selection-start-column="25" selection-end-line="1218" selection-end-column="25" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#477#481#1" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sprint-ii.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="459" column="75" lean-forward="true" selection-start-line="459" selection-start-column="75" selection-end-line="459" selection-end-column="75" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#477#481#1" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sprint-iii.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="537">
+          <caret line="529" column="38" lean-forward="true" selection-start-line="529" selection-start-column="38" selection-end-line="529" selection-end-column="38" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#477#481#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sprint-iv.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="558" column="45" lean-forward="true" selection-start-line="558" selection-start-column="45" selection-end-line="558" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sprint-i.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="14525">
+          <caret line="581" column="62" selection-start-line="581" selection-start-column="62" selection-end-line="581" selection-end-column="62" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#div#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#26498#26504#0" expanded="true" />
+            <element signature="e#26809#26815#0" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/electrical.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="556" column="32" selection-start-line="556" selection-start-column="32" selection-end-line="556" selection-end-column="32" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#477#481#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mechanical.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="578" column="21" lean-forward="true" selection-start-line="578" selection-start-column="21" selection-end-line="578" selection-end-column="21" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#477#481#1" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#5;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#hr#0;n#div#5;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#5;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#32500#32506#0" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#7;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#7;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#8;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#hr#0;n#div#8;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#8;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#37917#37923#0" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#10;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
